@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="ru.instefa.cafepickpos.model">
+	<class lazy="false" name="ru.instefa.cafepickpos.model.CashDrawer" table="CASH_DRAWER">
+		<id column="ID" name="id" type="java.lang.Integer">
+			<generator class="identity" />
+		</id>
+
+		<set cascade="all" inverse="true" lazy="false" name="currencyBalanceList">
+			<key>
+				<column name="CASH_DRAWER_ID" />
+			</key>
+			<one-to-many class="ru.instefa.cafepickpos.model.CurrencyBalance" />
+		</set>
+
+		<!-- Associations -->
+		<many-to-one class="ru.instefa.cafepickpos.model.Terminal" cascade="none" lazy="false" name="terminal">
+			<column name="TERMINAL_ID" />
+		</many-to-one>
+		
+	</class>
+</hibernate-mapping>

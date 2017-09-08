@@ -1,0 +1,1 @@
+start javaw -splash:config\splash.gif -jar cafepickpos.jar
