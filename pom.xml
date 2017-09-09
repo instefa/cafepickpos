@@ -4,7 +4,7 @@
 
     <groupId>ru.instefa.cafepickpos</groupId>
     <artifactId>cafepickpos</artifactId>
-    <version>2017.0.1</version>
+    <version>2017.1.1</version>
     <packaging>jar</packaging>
 
     <name>CafepickPOS</name>
