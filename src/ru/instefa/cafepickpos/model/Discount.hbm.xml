@@ -3,7 +3,11 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="Discount" table="COUPON_AND_DISCOUNT">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 		<property column="NAME" length="120" name="name" type="string" />
 		<property column="TYPE" name="type" type="java.lang.Integer" />
@@ -19,22 +23,20 @@
 		<property column="MODIFIABLE" name="modifiable" type="java.lang.Boolean" />
 		<property column="NEVER_EXPIRE" name="neverExpire" type="java.lang.Boolean" />
 		<property column="UUID" length="36" name="UUID" unique="true" type="java.lang.String" />
-		
+
 		<bag cascade="save-update" inverse="false" lazy="false" name="menuItems" table="MENUITEM_DISCOUNT">
 			<key column="DISCOUNT_ID" />
-			<many-to-many class="MenuItem" column="MENUITEM_ID"/>
+			<many-to-many class="MenuItem" column="MENUITEM_ID" />
 		</bag>
-		
-		<bag cascade="save-update" inverse="false" lazy="false" name="menuGroups"
-			table="MENUGROUP_DISCOUNT">
+
+		<bag cascade="save-update" inverse="false" lazy="false" name="menuGroups" table="MENUGROUP_DISCOUNT">
 			<key column="DISCOUNT_ID" />
 			<many-to-many class="MenuGroup" column="MENUGROUP_ID" />
 		</bag>
-		
-		<bag cascade="save-update" inverse="false" lazy="false" name="menuCategories"
-			table="MENUCATEGORY_DISCOUNT">
+
+		<bag cascade="save-update" inverse="false" lazy="false" name="menuCategories" table="MENUCATEGORY_DISCOUNT">
 			<key column="DISCOUNT_ID" />
 			<many-to-many class="MenuCategory" column="MENUCATEGORY_ID" />
-		</bag> 
+		</bag>
 	</class>
 </hibernate-mapping>

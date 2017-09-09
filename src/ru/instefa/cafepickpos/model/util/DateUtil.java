@@ -131,7 +131,7 @@ public class DateUtil {
 	public static int getCalendarHour() {
 		if (TerminalConfig.isUse24HourClockMode()) {
 			return Calendar.HOUR_OF_DAY;
-		}
+}
 		else {
 			return Calendar.HOUR;
 		}
@@ -177,5 +177,4 @@ public class DateUtil {
 			return Messages.getString("DateUtil.5");
 		}
 	}
-
 }

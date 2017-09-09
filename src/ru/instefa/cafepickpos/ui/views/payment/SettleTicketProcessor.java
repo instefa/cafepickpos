@@ -254,6 +254,8 @@ public class SettleTicketProcessor implements CardInputListener {
 		ticket.setGratuity(gratuity);
 		ticket.calculatePrice();
 		OrderController.saveOrder(ticket);
+		if (OrderView.getInstance().isVisible())
+			OrderView.getInstance().setCurrentTicket(ticket);
 		doInformListenerPaymentUpdate();
 	}
 

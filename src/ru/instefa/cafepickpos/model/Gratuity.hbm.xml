@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
-  <class lazy="false" name="ru.instefa.cafepickpos.model.Gratuity" table="GRATUITY">
-    <id column="ID" name="id" type="java.lang.Integer">
-      <generator class="identity"/>
-    </id>
-    
-    <property column="AMOUNT" name="amount" type="java.lang.Double"/>
-    <property column="PAID" name="paid" type="java.lang.Boolean"/>
-    <property column="REFUNDED" name="refunded" type="java.lang.Boolean"/>
-    <many-to-one class="Ticket" column="TICKET_ID" name="ticket"/>
-    <many-to-one class="ru.instefa.cafepickpos.model.User" lazy="false" name="owner">
-      <column name="OWNER_ID"/>
-    </many-to-one>
-    <many-to-one class="ru.instefa.cafepickpos.model.Terminal" lazy="false" name="terminal">
-      <column name="TERMINAL_ID"/>
-    </many-to-one>
-    <!-- Associations -->
-  </class>
+	<class lazy="false" name="ru.instefa.cafepickpos.model.Gratuity" table="GRATUITY">
+		<id column="ID" name="id" type="java.lang.Integer">
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
+		</id>
+
+		<property column="AMOUNT" name="amount" type="java.lang.Double" />
+		<property column="PAID" name="paid" type="java.lang.Boolean" />
+		<property column="REFUNDED" name="refunded" type="java.lang.Boolean" />
+		<many-to-one class="Ticket" column="TICKET_ID" name="ticket" />
+		<many-to-one class="ru.instefa.cafepickpos.model.User" lazy="false" name="owner">
+			<column name="OWNER_ID" />
+		</many-to-one>
+		<many-to-one class="ru.instefa.cafepickpos.model.Terminal" lazy="false" name="terminal">
+			<column name="TERMINAL_ID" />
+		</many-to-one>
+		<!-- Associations -->
+	</class>
 </hibernate-mapping>

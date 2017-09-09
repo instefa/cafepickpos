@@ -29,25 +29,34 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.joda.time.Interval;
 
 import ru.instefa.cafepickpos.config.AppConfig;
+import ru.instefa.cafepickpos.demo.StyledButton;
 
 public class TimerWatch extends JPanel implements ActionListener {
 
 	Timer updateTimer = new Timer(1000, this);
-	JLabel timerLabel = new JLabel();
+	StyledButton timerLabel = new StyledButton("");
 	private final Date date;
 	public Color backColor;
 	public Color textColor;
 
 	public TimerWatch(Date date) {
 		this.date = date;
+		setOpaque(false);
+		setLayout(new MigLayout("right,ins 0"));
 
-		timerLabel.setFont(timerLabel.getFont().deriveFont(Font.BOLD));
+		backColor = Color.black;
+		textColor = Color.white;
+
+		timerLabel.setFont(timerLabel.getFont().deriveFont(Font.BOLD, 14f));
 		timerLabel.setHorizontalAlignment(JLabel.RIGHT);
+		timerLabel.setPreferredSize(PosUIManager.getSize(70, 30));
 
 		actionPerformed(null);
 
@@ -62,25 +71,25 @@ public class TimerWatch extends JPanel implements ActionListener {
 		int timeOutValueYellow = 300; 
 		int timeOutValueRed = 600; 
 		
-		if(AppConfig.getString("YellowTimeOut")!=null ) {
+		if (AppConfig.getString("YellowTimeOut") != null) {
 			timeOutValueYellow = Integer.parseInt(AppConfig.getString("YellowTimeOut")); //$NON-NLS-1$
 		}
 		
-		if(AppConfig.getString("RedTimeOut")!=null){
+		if (AppConfig.getString("RedTimeOut") != null) {
 			timeOutValueRed = Integer.parseInt(AppConfig.getString("RedTimeOut")); //$NON-NLS-1$
 		}
 
 		if (timeOutValueYellow < duration.getStandardSeconds() && timeOutValueRed > duration.getStandardSeconds()) {
 			backColor = Color.yellow;
-			textColor=Color.black;
+			textColor = Color.black;
 		}
 		else if (timeOutValueRed < duration.getStandardSeconds()) {
 			backColor = Color.red;
-			textColor=Color.white; 
+			textColor = Color.white;
 		}
 		else {
-			backColor = Color.white;
-			textColor=Color.black;
+			backColor = Color.black;
+			textColor = Color.white;
 		}
 
 		timerLabel.setText(duration.getStandardHours() + ":" + (duration.getStandardMinutes() % 60) + ":" + (duration.getStandardSeconds() % 60)); //$NON-NLS-1$ //$NON-NLS-2$

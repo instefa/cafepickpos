@@ -17,6 +17,8 @@
  */
 package ru.instefa.cafepickpos.extension;
 
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.ui.views.order.DefaultOrderServiceExtension;
 
 public class OrderServiceFactory {

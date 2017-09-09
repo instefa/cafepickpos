@@ -108,6 +108,7 @@ public class NumberSelectionDialog2 extends OkCancelOptionDialog {
 		else {
 			tfNumber.setText(String.valueOf((int) value));
 		}
+		tfNumber.selectAll();
 	}
 
 	public boolean isFloatingPoint() {

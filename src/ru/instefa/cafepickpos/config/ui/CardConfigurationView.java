@@ -32,10 +32,10 @@ import javax.swing.JSeparator;
 import net.miginfocom.swing.MigLayout;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.config.CardConfig;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.PaymentGatewayPlugin;
 import ru.instefa.cafepickpos.swing.DoubleTextField;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;

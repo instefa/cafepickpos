@@ -33,10 +33,10 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.model.OrderType;
 import ru.instefa.cafepickpos.model.dao.OrderTypeDAO;

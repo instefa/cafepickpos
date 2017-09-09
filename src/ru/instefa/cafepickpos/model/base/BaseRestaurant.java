@@ -17,6 +17,7 @@
  */
 package ru.instefa.cafepickpos.model.base;
 
+import java.lang.Comparable;
 import java.io.Serializable;
 
 
@@ -32,23 +33,24 @@ import java.io.Serializable;
 public abstract class BaseRestaurant  implements Comparable, Serializable {
 
 	public static String REF = "Restaurant"; //$NON-NLS-1$
-	public static String PROP_ITEM_PRICE_INCLUDES_TAX = "itemPriceIncludesTax"; //$NON-NLS-1$
-	public static String PROP_TELEPHONE = "telephone"; //$NON-NLS-1$
-	public static String PROP_TICKET_FOOTER_MESSAGE = "ticketFooterMessage"; //$NON-NLS-1$
-	public static String PROP_SERVICE_CHARGE_PERCENTAGE = "serviceChargePercentage"; //$NON-NLS-1$
 	public static String PROP_UNIQUE_ID = "uniqueId"; //$NON-NLS-1$
+	public static String PROP_TELEPHONE = "telephone"; //$NON-NLS-1$
 	public static String PROP_ZIP_CODE = "zipCode"; //$NON-NLS-1$
+	public static String PROP_SERVICE_CHARGE_PERCENTAGE = "serviceChargePercentage"; //$NON-NLS-1$
+	public static String PROP_STORE_NO = "storeNo"; //$NON-NLS-1$
+	public static String PROP_ALLOW_MODIFIER_MAX_EXCEED = "allowModifierMaxExceed"; //$NON-NLS-1$
+	public static String PROP_TICKET_FOOTER_MESSAGE = "ticketFooterMessage"; //$NON-NLS-1$
+	public static String PROP_CURRENCY_SYMBOL = "currencySymbol"; //$NON-NLS-1$
 	public static String PROP_NAME = "name"; //$NON-NLS-1$
-	public static String PROP_DEFAULT_GRATUITY_PERCENTAGE = "defaultGratuityPercentage"; //$NON-NLS-1$
 	public static String PROP_CURRENCY_NAME = "currencyName"; //$NON-NLS-1$
+	public static String PROP_ADDRESS_LINE3 = "addressLine3"; //$NON-NLS-1$
+	public static String PROP_ADDRESS_LINE2 = "addressLine2"; //$NON-NLS-1$
+	public static String PROP_ADDRESS_LINE1 = "addressLine1"; //$NON-NLS-1$
+	public static String PROP_DEFAULT_GRATUITY_PERCENTAGE = "defaultGratuityPercentage"; //$NON-NLS-1$
+	public static String PROP_ITEM_PRICE_INCLUDES_TAX = "itemPriceIncludesTax"; //$NON-NLS-1$
+	public static String PROP_CAPACITY = "capacity"; //$NON-NLS-1$
 	public static String PROP_TABLES = "tables"; //$NON-NLS-1$
 	public static String PROP_ID = "id"; //$NON-NLS-1$
-	public static String PROP_CAPACITY = "capacity"; //$NON-NLS-1$
-	public static String PROP_ALLOW_MODIFIER_MAX_EXCEED = "allowModifierMaxExceed"; //$NON-NLS-1$
-	public static String PROP_ADDRESS_LINE1 = "addressLine1"; //$NON-NLS-1$
-	public static String PROP_ADDRESS_LINE2 = "addressLine2"; //$NON-NLS-1$
-	public static String PROP_ADDRESS_LINE3 = "addressLine3"; //$NON-NLS-1$
-	public static String PROP_CURRENCY_SYMBOL = "currencySymbol"; //$NON-NLS-1$
 
 
 	// constructors
@@ -75,6 +77,7 @@ public abstract class BaseRestaurant  implements Comparable, Serializable {
 
 	// fields
 		protected java.lang.Integer uniqueId;
+		protected java.lang.String storeNo;
 		protected java.lang.String name;
 		protected java.lang.String addressLine1;
 		protected java.lang.String addressLine2;
@@ -128,6 +131,23 @@ public abstract class BaseRestaurant  implements Comparable, Serializable {
 	 */
 	public void setUniqueId (java.lang.Integer uniqueId) {
 		this.uniqueId = uniqueId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: STORE_NO
+	 */
+	public java.lang.String getStoreNo () {
+					return storeNo;
+			}
+
+	/**
+	 * Set the value related to the column: STORE_NO
+	 * @param storeNo the STORE_NO value
+	 */
+	public void setStoreNo (java.lang.String storeNo) {
+		this.storeNo = storeNo;
 	}
 
 

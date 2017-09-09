@@ -60,6 +60,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	public static String PROP_SHIFT = "shift"; //$NON-NLS-1$
 	public static String PROP_WASTED = "wasted"; //$NON-NLS-1$
 	public static String PROP_ACTIVE_DATE = "activeDate"; //$NON-NLS-1$
+	public static String PROP_SEQUENCE = "sequence"; //$NON-NLS-1$
 	public static String PROP_TOTAL_AMOUNT = "totalAmount"; //$NON-NLS-1$
 	public static String PROP_CUSTOMER_ID = "customerId"; //$NON-NLS-1$
 	public static String PROP_TERMINAL = "terminal"; //$NON-NLS-1$
@@ -100,6 +101,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 
 	// fields
 		protected java.lang.String globalId;
+		protected long sequence;
 		protected java.util.Date createDate;
 		protected java.util.Date closingDate;
 		protected java.util.Date activeDate;
@@ -152,7 +154,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	/**
 	 * Return the unique identifier of this class
      * @hibernate.id
-     *  generator-class="identity"
+     *  generator-class="ru.instefa.cafepickpos.util.IntegerIdGenerator"
      *  column="ID"
      */
 	public java.lang.Integer getId () {
@@ -201,6 +203,23 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	 */
 	public void setGlobalId (java.lang.String globalId) {
 		this.globalId = globalId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: SEQUENCE
+	 */
+	public long getSequence () {
+					return sequence;
+			}
+
+	/**
+	 * Set the value related to the column: SEQUENCE
+	 * @param sequence the SEQUENCE value
+	 */
+	public void setSequence (long sequence) {
+		this.sequence = sequence;
 	}
 
 
@@ -837,7 +856,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: properties
 	 */
-	public java.util.Map<String, String> getProperties () {
+	public java.util.Map<String, String> getProperties() {
 					return properties;
 			}
 
@@ -845,7 +864,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	 * Set the value related to the column: properties
 	 * @param properties the properties value
 	 */
-	public void setProperties (java.util.Map<String, String> properties) {
+	public void setProperties(java.util.Map<String, String> properties) {
 		this.properties = properties;
 	}
 
@@ -920,7 +939,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: tableNumbers
 	 */
-	public java.util.List<Integer> getTableNumbers () {
+	public java.util.List<Integer> getTableNumbers() {
 					return tableNumbers;
 			}
 
@@ -928,7 +947,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 	 * Set the value related to the column: tableNumbers
 	 * @param tableNumbers the tableNumbers value
 	 */
-	public void setTableNumbers (java.util.List<Integer> tableNumbers) {
+	public void setTableNumbers(java.util.List<Integer> tableNumbers) {
 		this.tableNumbers = tableNumbers;
 	}
 
@@ -941,7 +960,7 @@ public abstract class BaseTicket  implements Comparable, Serializable {
 		if (!(obj instanceof ru.instefa.cafepickpos.model.Ticket)) return false;
 		else {
 			ru.instefa.cafepickpos.model.Ticket ticket = (ru.instefa.cafepickpos.model.Ticket) obj;
-			if (null == this.getId() || null == ticket.getId()) return false;
+			if (null == this.getId() || null == ticket.getId()) return this == obj;
 			else return (this.getId().equals(ticket.getId()));
 		}
 	}

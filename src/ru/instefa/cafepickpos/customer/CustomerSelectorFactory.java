@@ -17,7 +17,8 @@
  */
 package ru.instefa.cafepickpos.customer;
 
-import ru.instefa.cafepickpos.extension.ExtensionManager;
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.model.OrderType;
 

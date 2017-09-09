@@ -3,7 +3,11 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="DrawerPullReport" table="DRAWER_PULL_REPORT">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 		<property column="REPORT_TIME" index="drawer_report_time" name="reportTime" type="java.util.Date" />
 		<property column="REG" length="15" name="reg" type="string" />
@@ -66,11 +70,11 @@
 		<property name="totalDiscountCheckSize" type="java.lang.Integer" />
 		<property name="totalDiscountPercentage" type="java.lang.Double" />
 		<property name="totalDiscountRatio" type="java.lang.Double" />
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.User" name="assignedUser">
 			<column name="USER_ID" />
 		</many-to-one>
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.Terminal" name="terminal">
 			<column name="TERMINAL_ID" />
 		</many-to-one>

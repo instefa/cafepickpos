@@ -21,11 +21,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Frame;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +65,6 @@ import ru.instefa.cafepickpos.model.TicketItem;
 import ru.instefa.cafepickpos.model.dao.KitchenTicketDAO;
 import ru.instefa.cafepickpos.model.dao.KitchenTicketItemDAO;
 import ru.instefa.cafepickpos.model.dao.TicketDAO;
-import ru.instefa.cafepickpos.swing.ButtonColumn;
 import ru.instefa.cafepickpos.swing.ListTableModel;
 import ru.instefa.cafepickpos.swing.PosButton;
 import ru.instefa.cafepickpos.swing.PosUIManager;
@@ -65,11 +72,11 @@ import ru.instefa.cafepickpos.swing.TimerWatch;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 
 public class KitchenTicketView extends JPanel {
-	KitchenTicket kitchenTicket;
-	JLabel ticketId = new JLabel();
-	KitchenTicketTableModel tableModel;
-	JTable table;
-	KitchenTicketStatusSelector statusSelector;
+	private KitchenTicket kitchenTicket;
+	private JLabel ticketId = new JLabel();
+	private KitchenTicketTableModel tableModel;
+	private JTable table;
+	private KitchenTicketStatusSelector statusSelector;
 	private TimerWatch timerWatch;
 	private JScrollPane scrollPane;
 
@@ -78,10 +85,13 @@ public class KitchenTicketView extends JPanel {
 	private JLabel ticketInfo;
 	private JLabel tableInfo;
 	private JLabel serverInfo;
+	private BumpButton btnDone;
 
 	public KitchenTicketView(KitchenTicket ticket) {
 		this.kitchenTicket = ticket;
 		setLayout(new BorderLayout(1, 1));
+		setBackground(Color.black);
+
 		createHeader(ticket);
 		createTable(ticket);
 		createButtonPanel();
@@ -114,7 +124,10 @@ public class KitchenTicketView extends JPanel {
 	}
 
 	private void createHeader(KitchenTicket ticket) {
-		String printerName = ticket.getPrinters().toString();
+		String printerName = ticket.getPrinterName();
+		if (printerName == null) {
+			printerName = "";
+		}
 
 		ticketInfo = new JLabel(Messages.getString("KitchenTicketView.19") + ticket.getTicketId() + "-" +
 								ticket.getSequenceNumber() + " " + printerName + "");
@@ -137,15 +150,19 @@ public class KitchenTicketView extends JPanel {
 		serverInfo.setFont(font);
 
 		timerWatch = new TimerWatch(ticket.getCreateDate());
+		timerWatch.setBackground(Color.black);
 		//timerWatch.setPreferredSize(new Dimension(100, 30));
 
 		headerPanel = new JPanel(new MigLayout("fill", "sg, fill", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		headerPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+		headerPanel.setBackground(Color.black);
+		headerPanel.setBorder(BorderFactory.createLineBorder(Color.white));
 		headerPanel.add(ticketInfo, "split 2"); //$NON-NLS-1$
-		headerPanel.add(timerWatch, "right,wrap, span"); //$NON-NLS-1$
+		ticketInfo.setFont(ticketInfo.getFont().deriveFont(Font.BOLD, 13f));
+		headerPanel.add(timerWatch, "right,wrap"); //$NON-NLS-1$
 		headerPanel.add(tableInfo, "split 2, grow"); //$NON-NLS-1$
 		headerPanel.add(serverInfo, "right,span"); //$NON-NLS-1$
 
+		updateHeaderView();
 		add(headerPanel, BorderLayout.NORTH);
 	}
 
@@ -156,6 +173,9 @@ public class KitchenTicketView extends JPanel {
 		table.setCellSelectionEnabled(false);
 		table.setRowHeight(30);
 		table.setTableHeader(null);
+		table.setOpaque(false);
+		table.setIntercellSpacing(new Dimension(0, 0));
+		table.setShowGrid(false);
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -171,10 +191,12 @@ public class KitchenTicketView extends JPanel {
 						rendererComponent.setBackground(new Color(128, 0, 128));
 					}
 					else {
-						rendererComponent.setBackground(Color.white);
+						rendererComponent.setBackground(Color.black);
+						rendererComponent.setForeground(Color.white);
 					}
 				}
-
+				Font font = getFont().deriveFont(Font.BOLD, 16f);
+				rendererComponent.setFont(font);
 				if (column == 1) {
 					if (ticketItem.getQuantity() <= 0) {
 						return new JLabel();
@@ -203,15 +225,20 @@ public class KitchenTicketView extends JPanel {
 			}
 		};
 
-		new ButtonColumn(table, action, 2) {
+		new CustomButtonColumn(table, action, 2) {
 
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 				KitchenTicketItem ticketItem = tableModel.getRowData(row);
 				if (ticketItem.getQuantity() <= 0) {
-					return new JLabel();
+					JLabel jLabel = new JLabel();
+					jLabel.setOpaque(false);
+					return jLabel;
 				}
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				Component tableCellRendererComponent = (Component) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				Font font = getFont().deriveFont(Font.BOLD, 12f);
+				tableCellRendererComponent.setFont(font);
+				return tableCellRendererComponent;
 			}
 
 			@Override
@@ -220,11 +247,16 @@ public class KitchenTicketView extends JPanel {
 				if (ticketItem.getQuantity() <= 0) {
 					return new JLabel();
 				}
-				return super.getTableCellEditorComponent(table, value, isSelected, row, column);
+				Component tableCellEditorComponent = (Component) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+				Font font = getFont().deriveFont(Font.BOLD, 12f);
+				tableCellEditorComponent.setFont(font);
+				return tableCellEditorComponent;
 			}
 
 		};
 		scrollPane = new JScrollPane(table);
+		scrollPane.setViewportBorder(BorderFactory.createLineBorder(Color.white));
+		scrollPane.getViewport().setBackground(Color.black);
 		add(scrollPane);
 	}
 
@@ -249,17 +281,18 @@ public class KitchenTicketView extends JPanel {
 		});
 		//buttonPanel.add(btnVoid);
 
-		PosButton btnDone = new PosButton(POSConstants.BUMP); //$NON-NLS-1$
+		btnDone = new BumpButton(POSConstants.BUMP);
 		btnDone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				closeTicket(KitchenTicketStatus.DONE);
+
 			}
 		});
 
 		btnDone.setPreferredSize(PosUIManager.getSize(100, 40));
 
 		buttonPanel.add(btnDone);
+		buttonPanel.setOpaque(false);
 
 		//		PosButton btnPrint = new PosButton("PRINT");
 		//		btnPrint.addActionListener(new ActionListener() {
@@ -296,7 +329,7 @@ public class KitchenTicketView extends JPanel {
 	private void resizeTableColumns() {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		setColumnWidth(1, PosUIManager.getSize(40));
-		setColumnWidth(2, PosUIManager.getSize(50));
+		setColumnWidth(2, PosUIManager.getSize(60));
 	}
 
 	private void setColumnWidth(int columnNumber, int width) {
@@ -374,7 +407,7 @@ public class KitchenTicketView extends JPanel {
 				tx = session.beginTransaction();
 				for (KitchenTicketItem kitchenTicketItem : kitchenTicket.getTicketItems()) {
 					kitchenTicketItem.setStatus(status.name());
-//Question: Do we actually need status in original ticket item?
+					//Question: Do we actually need status in original ticket item?
 					int itemCount = kitchenTicketItem.getQuantity();
 
 					for (TicketItem item : parentTicket.getTicketItems()) {
@@ -414,5 +447,97 @@ public class KitchenTicketView extends JPanel {
 		} catch (Exception e) {
 			POSMessageDialog.showError(KitchenTicketView.this, e.getMessage(), e);
 		}
+	}
+
+	private class BumpButton extends PosButton implements ActionListener {
+		private Boolean keySelected = false;
+
+		public BumpButton(String string) {
+			super(string);
+			setOpaque(false);
+			addActionListener(this);
+			setBackground(Color.white);
+			setBorder(BorderFactory.createLineBorder(Color.white));
+		}
+
+		@Override
+		protected void paintComponent(Graphics g) {
+			g.setColor(getBackground());
+			g.fillRect(0, 0, getWidth(), getHeight());
+
+			Color color1 = getBackground();// UIManager.getColor("control");
+			Color color2 = color1.brighter();
+
+			int buttonX = 0;
+			int buttonY = 0;
+			int width = getWidth();
+			int height = getHeight();
+
+			GradientPaint gp = new GradientPaint(buttonX, buttonY, color2, width - 2, height - 2, color1, true);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setPaint(gp);
+			g2.fillRect(buttonX, buttonY, width, height);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			if (keySelected) {
+				g2.setColor(new Color(0, 160, 0));
+			}
+			else {
+				g2.setColor(new Color(234, 42, 42));
+			}
+			int h = getHeight() - 10;
+			g2.fillOval(10, 4, h, h);
+			g2.setColor(Color.WHITE);
+			g2.setFont(new Font(getFont().getName(), Font.BOLD, 20));
+			FontMetrics fm = g2.getFontMetrics();
+			Rectangle2D r = fm.getStringBounds(getKey(), g2);
+			int x = ((h + 10 - (int) r.getWidth() + 10) / 2);
+			int y = (h - (int) r.getHeight()) / 2 + fm.getAscent();
+			g2.drawString(getKey(), x, y + 2);
+			g2.setFont(getFont());
+			g2.setBackground(getBackground());
+			super.paintComponent(g2);
+		}
+
+		public Boolean isKeySelected() {
+			return keySelected;
+		}
+
+		public void setKeySelected(Boolean keySelected) {
+			this.keySelected = keySelected;
+			repaint();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			closeTicket(KitchenTicketStatus.DONE);
+		}
+	}
+
+	public boolean keySelected(int key) {
+		String keyString = KeyEvent.getKeyText(key);
+		if (keyString.contains("NumPad-")) {
+			keyString = keyString.split("-")[1];
+		}
+		Object kitchenKey = getClientProperty("key");
+		String keyValue = String.valueOf(kitchenKey);
+		boolean keySelected = keyValue.equals(keyString);
+		btnDone.setKeySelected(keySelected);
+		return keySelected;
+	}
+
+	public void setSelected(boolean b) {
+		btnDone.setKeySelected(b);
+	}
+
+	public boolean isKeySelected() {
+		return btnDone.isKeySelected();
+	}
+
+	public void fireBumpSelected() {
+		btnDone.actionPerformed(null);
+	}
+
+	protected String getKey() {
+		return String.valueOf(getClientProperty("key"));
 	}
 }

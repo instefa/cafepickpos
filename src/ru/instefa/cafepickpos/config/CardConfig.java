@@ -22,10 +22,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.extension.AuthorizeNetGatewayPlugin;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.PaymentGatewayPlugin;
 import ru.instefa.cafepickpos.model.CardReader;
 import ru.instefa.cafepickpos.util.AESencrp;

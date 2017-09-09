@@ -488,6 +488,7 @@ public class POSConstants {
 	public static final String RECEIPT_REPORT_PAIDAMOUNT_LABEL = Messages.getString("RECEIPT_REPORT_PAIDAMOUNT_LABEL"); //$NON-NLS-1$
 	public static final String RECEIPT_REPORT_DUEAMOUNT_LABEL = Messages.getString("RECEIPT_REPORT_DUEAMOUNT_LABEL"); //$NON-NLS-1$
 	public static final String RECEIPT_REPORT_CHANGEAMOUNT_LABEL = Messages.getString("RECEIPT_REPORT_CHANGEAMOUNT_LABEL"); //$NON-NLS-1$
+    public static final String SEARCH = Messages.getString("SEARCH"); //$NON-NLS-1$
 	// 20170710, pymancer, ticket status filter
 	public static final String PAYMENT_STATUS_FILTER_OPEN = Messages.getString("PAYMENT_STATUS_FILTER_OPEN"); //$NON-NLS-1$
 	public static final String PAYMENT_STATUS_FILTER_PAID = Messages.getString("PAYMENT_STATUS_FILTER_PAID"); //$NON-NLS-1$

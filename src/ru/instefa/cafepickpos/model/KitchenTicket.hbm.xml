@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
-	<class lazy="false" name="ru.instefa.cafepickpos.model.KitchenTicket"  table="KITCHEN_TICKET">
+	<class lazy="false" name="ru.instefa.cafepickpos.model.KitchenTicket" table="KITCHEN_TICKET">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
-		
-		
+
+
 		<property column="TICKET_ID" name="ticketId" type="java.lang.Integer" />
-		
+
 		<property column="CREATE_DATE" length="10" name="createDate" type="java.util.Date" />
 		<property column="CLOSE_DATE" length="10" name="closingDate" type="java.util.Date" />
 		<property column="VOIDED" name="voided" type="java.lang.Boolean" />
@@ -16,9 +20,10 @@
 		<property column="SEQUENCE_NUMBER" name="sequenceNumber" type="java.lang.Integer" />
 		<property column="STATUS" name="status" type="string" length="30" />
 		<property column="SERVER_NAME" name="serverName" type="string" length="30" />
-		
+
 		<property name="ticketType" column="TICKET_TYPE" length="20" type="string" />
-		
+		<property column="PRINTER_NAME" name="printerName" type="string" length="128" />
+
 		<bag name="tableNumbers" table="KIT_TICKET_TABLE_NUM" lazy="false" cascade="all">
 			<key column="kit_ticket_id" />
 			<element column="TABLE_ID" type="java.lang.Integer" />
@@ -33,10 +38,10 @@
 			<list-index column="ITEM_ORDER" />
 			<one-to-many class="ru.instefa.cafepickpos.model.KitchenTicketItem" />
 		</list>
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.PrinterGroup" lazy="false" cascade="none" name="printerGroup">
 			<column name="PG_ID" />
 		</many-to-one>
-		
+
 	</class>
 </hibernate-mapping>

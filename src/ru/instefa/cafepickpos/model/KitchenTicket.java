@@ -251,6 +251,9 @@ public class KitchenTicket extends BaseKitchenTicket {
 					KitchenTicketDAO.getInstance().saveOrUpdate(kitchenTicket);
 
 					kitchenTicket.setPrinter(printer);
+					VirtualPrinter virtualPrinter = printer.getVirtualPrinter();
+					if (virtualPrinter != null)
+						kitchenTicket.setPrinterName(virtualPrinter.getName());
 
 					itemMap.put(printer, kitchenTicket);
 				}

@@ -199,7 +199,7 @@ public class NumericKeypad extends javax.swing.JComponent {
 				focusedTextComponent.setText(""); //$NON-NLS-1$
 			}
 			else {
-				focusedTextComponent.setText(focusedTextComponent.getText() + command);
+				focusedTextComponent.replaceSelection(command);
 			}
 		}
 	};

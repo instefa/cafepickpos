@@ -334,6 +334,19 @@ public class MenuItemDAO extends BaseMenuItemDAO {
 		}
 	}
 
+	public List<MenuItem> getMenuItemByName(String name) {
+		Session session = null;
+		Criteria criteria = null;
+		try {
+			session = createNewSession();
+			criteria = session.createCriteria(MenuItem.class);
+			criteria.add(Restrictions.ilike(MenuItem.PROP_NAME, name, MatchMode.ANYWHERE));
+			return criteria.list();
+		} finally {
+			closeSession(session);
+		}
+	}
+
 	public List<MenuItem> getPizzaItems() {
 		Session session = null;
 		Criteria criteria = null;

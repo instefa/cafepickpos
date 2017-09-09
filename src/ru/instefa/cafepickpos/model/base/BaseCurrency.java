@@ -83,7 +83,7 @@ public abstract class BaseCurrency  implements Comparable, Serializable {
 	/**
 	 * Return the unique identifier of this class
      * @hibernate.id
-     *  generator-class="identity"
+     *  generator-class="hilo"
      *  column="ID"
      */
 	public java.lang.Integer getId () {

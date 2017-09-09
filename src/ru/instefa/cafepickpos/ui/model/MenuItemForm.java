@@ -60,14 +60,13 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.apache.commons.io.FileUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.PosLog;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.InventoryPlugin;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.model.MenuGroup;

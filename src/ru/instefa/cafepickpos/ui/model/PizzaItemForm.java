@@ -62,15 +62,14 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.apache.commons.io.FileUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.PosLog;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.InventoryPlugin;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.model.MenuGroup;
@@ -82,14 +81,12 @@ import ru.instefa.cafepickpos.model.OrderType;
 import ru.instefa.cafepickpos.model.PizzaCrust;
 import ru.instefa.cafepickpos.model.PizzaPrice;
 import ru.instefa.cafepickpos.model.PrinterGroup;
-import ru.instefa.cafepickpos.model.Tax;
 import ru.instefa.cafepickpos.model.TaxGroup;
 import ru.instefa.cafepickpos.model.dao.MenuGroupDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemSizeDAO;
 import ru.instefa.cafepickpos.model.dao.PizzaCrustDAO;
 import ru.instefa.cafepickpos.model.dao.PrinterGroupDAO;
-import ru.instefa.cafepickpos.model.dao.TaxDAO;
 import ru.instefa.cafepickpos.model.dao.TaxGroupDAO;
 import ru.instefa.cafepickpos.swing.BeanTableModel;
 import ru.instefa.cafepickpos.swing.CheckBoxList;

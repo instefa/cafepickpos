@@ -42,9 +42,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.StaleStateException;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.IconFactory;
 import ru.instefa.cafepickpos.Messages;
@@ -53,7 +53,6 @@ import ru.instefa.cafepickpos.exceptions.PosException;
 import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.customer.CustomerSelectorDialog;
 import ru.instefa.cafepickpos.customer.CustomerSelectorFactory;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.extension.OrderServiceFactory;
 import ru.instefa.cafepickpos.main.Application;
@@ -987,7 +986,7 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 		}
 
 		ticketSummaryView.setVisible(true);
-
+		ticketView.setVisibleTotalButton(false);
 		ticketViewContainer.add(actionButtonPanel, BorderLayout.SOUTH);
 		add(ticketViewContainer, java.awt.BorderLayout.CENTER);
 		add(paymentView, java.awt.BorderLayout.EAST);
@@ -997,6 +996,7 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 		removeAll();
 		setVisibleButtonForOrderView();
 		ticketSummaryView.setVisible(false);
+		ticketView.setVisibleTotalButton(true);
 		add(categoryView, java.awt.BorderLayout.EAST);
 		add(ticketViewContainer, java.awt.BorderLayout.WEST);
 		add(midContainer, java.awt.BorderLayout.CENTER);

@@ -45,9 +45,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.swingx.JXCollapsiblePane;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.ITicketList;
 import ru.instefa.cafepickpos.Messages;
@@ -60,7 +60,6 @@ import ru.instefa.cafepickpos.actions.RefundAction;
 import ru.instefa.cafepickpos.actions.SettleTicketAction;
 import ru.instefa.cafepickpos.actions.VoidTicketAction;
 import ru.instefa.cafepickpos.config.TerminalConfig;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.FloorLayoutPlugin;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.main.Application;
@@ -421,7 +420,6 @@ public class SwitchboardView extends ViewPanel implements ActionListener, ITicke
 
 			OrderInfoView view = new OrderInfoView(Arrays.asList(ticket));
 			OrderInfoDialog dialog = new OrderInfoDialog(view);
-			dialog.setSize(PosUIManager.getSize(400), PosUIManager.getSize(600));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setLocationRelativeTo(Application.getPosWindow());
 			dialog.setVisible(true);
@@ -496,7 +494,6 @@ public class SwitchboardView extends ViewPanel implements ActionListener, ITicke
 
 			OrderInfoView view = new OrderInfoView(ticketsToShow);
 			OrderInfoDialog dialog = new OrderInfoDialog(view);
-			dialog.setSize(PosUIManager.getSize(400), PosUIManager.getSize(600));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setLocationRelativeTo(Application.getPosWindow());
 			dialog.setVisible(true);

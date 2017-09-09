@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
@@ -47,7 +48,6 @@ import ru.instefa.cafepickpos.actions.ShowBackofficeAction;
 import ru.instefa.cafepickpos.actions.ShowKitchenDisplayAction;
 import ru.instefa.cafepickpos.actions.ShowOnlineTicketManagementAction;
 import ru.instefa.cafepickpos.actions.ShowTransactionsAuthorizationsAction;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.swing.PosButton;
 import ru.instefa.cafepickpos.swing.PosUIManager;

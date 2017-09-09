@@ -3,12 +3,16 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="ru.instefa.cafepickpos.model.PosTransaction" table="TRANSACTIONS">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 
 		<!-- this field will be renamed in future release -->
 		<discriminator column="PAYMENT_TYPE" length="30" type="string" />
-		<property name="globalId" column="GLOBAL_ID" length="16" type="string" unique="true"/>
+		<property name="globalId" column="GLOBAL_ID" length="16" type="string" unique="true" />
 		<property column="TRANSACTION_TIME" length="10" name="transactionTime" type="java.util.Date" />
 		<property column="AMOUNT" length="52" name="amount" type="java.lang.Double" />
 		<property column="TIPS_AMOUNT" length="52" name="tipsAmount" type="java.lang.Double" />

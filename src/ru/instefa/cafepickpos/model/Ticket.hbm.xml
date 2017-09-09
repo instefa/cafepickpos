@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
-	<class lazy="false" name="ru.instefa.cafepickpos.model.Ticket"  table="TICKET">
+	<class lazy="false" name="ru.instefa.cafepickpos.model.Ticket" table="TICKET">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">ticket_id_table</param>
+				<param name="column">ticket_next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 		<version name="version" column="VERSION_NO" type="long" />
-		<property name="globalId" column="GLOBAL_ID" length="16" type="string" unique="true"/>
+		<property name="globalId" column="GLOBAL_ID" length="16" type="string" unique="true" />
+		<property column="SEQUENCE" name="sequence" type="long" />
 		<property column="CREATE_DATE" index="ticketcreateDate" length="10" name="createDate" type="java.util.Date" />
 		<property column="CLOSING_DATE" index="ticketclosingDate" length="10" name="closingDate" type="java.util.Date" />
 		<property column="ACTIVE_DATE" index="ticketactiveDate" length="10" name="activeDate" type="java.util.Date" />
-		<property column="DELIVERY_DATE" index="deliveryDate" length="10" name="deliveryDate" type="java.util.Date" />
+		<property column="DELIVEERY_DATE" index="deliveryDate" length="10" name="deliveryDate" type="java.util.Date" />
 		<property column="CREATION_HOUR" index="creationHour" name="creationHour" type="java.lang.Integer" />
 		<property column="PAID" index="ticketpaid" name="paid" type="java.lang.Boolean" />
 		<property column="VOIDED" index="ticketvoided" name="voided" type="java.lang.Boolean" />
@@ -30,9 +35,7 @@
 		<!--tableNumber should be -1 for take out -->
 		<property column="NUMBER_OF_GUESTS" name="numberOfGuests" type="java.lang.Integer" />
 		<property column="STATUS" name="status" type="string" length="30" />
-		<!-- property name="gratuityAmount" type="java.lang.Double" column="GRATUITY_AMOUNT" /> <property name="gratuityPaid" type="java.lang.Boolean" column="GRATUITY_PAID"
-		 
-			/ -->
+		<!-- property name="gratuityAmount" type="java.lang.Double" column="GRATUITY_AMOUNT" /> <property name="gratuityPaid" type="java.lang.Boolean" column="GRATUITY_PAID" / -->
 		<property column="BAR_TAB" name="barTab" type="java.lang.Boolean" />
 		<property column="IS_TAX_EXEMPT" name="taxExempt" type="java.lang.Boolean" />
 		<property column="IS_RE_OPENED" name="reOpened" type="java.lang.Boolean" />
@@ -48,7 +51,7 @@
 		<map name="properties" cascade="all" lazy="false" table="TICKET_PROPERTIES">
 			<key column="id" />
 			<index column="property_name" type="string" />
-			<element column="property_value" type="string" length="1000"/>
+			<element column="property_value" type="string" length="1000" />
 		</map>
 
 		<!-- Associations -->

@@ -137,7 +137,7 @@ public class QuickCustomerForm extends BeanEditor<Customer> {
 		inputPanel.add(lblState, "cell 0 6,right"); //$NON-NLS-1$
 		inputPanel.add(tfState, "cell 1 6"); //$NON-NLS-1$
 
-		inputPanel.add(lblAddress, "cell 2 1 1 6,right"); //$NON-NLS-1$
+		inputPanel.add(lblAddress, "gapleft 10,aligny top,cell 2 1 1 6,right"); //$NON-NLS-1$
 		inputPanel.add(scrlDescription, "grow, cell 3 1 1 6"); //$NON-NLS-1$
 
 		qwertyKeyPad = new QwertyKeyPad();
@@ -260,11 +260,10 @@ public class QuickCustomerForm extends BeanEditor<Customer> {
 		tfFirstName.setText(customer.getFirstName());
 		tfLastName.setText(customer.getLastName());
 		tfCity.setText(customer.getCity());
-		//tfZip.setText(customer.getState());
-		//TODO: 
 		tfState.setText(customer.getState());
 		tfZip.setText(customer.getZipCode());
-		//tfCellPhone.setText(customer.getMobileNo());
+		if (customer.getAutoId() != null)
+			tfCellPhone.setText(customer.getMobileNo());
 		tfAddress.setText(customer.getAddress());
 	}
 
@@ -292,8 +291,6 @@ public class QuickCustomerForm extends BeanEditor<Customer> {
 		customer.setAddress(tfAddress.getText());
 		customer.setCity(tfCity.getText());
 		customer.setState(tfState.getText());
-		//customer.setState(tfZip.getText());
-		//TODO: 
 		customer.setZipCode(tfZip.getText());
 		customer.setMobileNo(tfCellPhone.getText());
 

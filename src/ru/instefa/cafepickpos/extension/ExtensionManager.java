@@ -36,7 +36,7 @@ import com.floreantpos.extension.FloreantPlugin;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.util.JarUtil;
 
-// TODO: analyze and implement cafepick analogue if necessary or use com.floreantpos.ploader, 20170907, pymancer
+// TODO: analyze and implement cafepick analogue if necessary or use ru.instefa.cafepickpos.ploader, 20170907, pymancer
 public class ExtensionManager {
 	private List<FloreantPlugin> plugins;
 

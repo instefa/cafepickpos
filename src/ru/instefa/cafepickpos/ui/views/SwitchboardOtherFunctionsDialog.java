@@ -27,10 +27,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.demo.KitchenDisplayWindow;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.FloorLayoutPlugin;
 import ru.instefa.cafepickpos.extension.TicketImportPlugin;
 import ru.instefa.cafepickpos.main.Application;

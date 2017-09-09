@@ -111,7 +111,7 @@ public class ReceiptPrintService {
 	private static final String ITEM_TEXT = "itemText"; //$NON-NLS-1$
 	private static final String CURRENCY_SYMBOL = "currencySymbol"; //$NON-NLS-1$
 	private static Log logger = LogFactory.getLog(ReceiptPrintService.class);
-    // 20170902, use user defined date format
+	// 20170902, use user defined date format
 	private static final SimpleDateFormat reportDateFormat = TerminalConfig.getGenericDatetimeFormat();
 
 	public static final String CUSTOMER_COPY = "Customer Copy";

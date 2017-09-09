@@ -3,7 +3,11 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="MenuItemSize" table="MENU_ITEM_SIZE">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 
 		<property name="name" column="NAME" type="java.lang.String" length="60" />
@@ -11,6 +15,6 @@
 		<property name="description" column="DESCRIPTION" type="java.lang.String" length="120" />
 		<property name="sortOrder" column="SORT_ORDER" type="java.lang.Integer" />
 		<property name="sizeInInch" column="SIZE_IN_INCH" type="java.lang.Double" />
-		<property name="defaultSize" column="DEFAULT_SIZE"  type="java.lang.Boolean" />
+		<property name="defaultSize" column="DEFAULT_SIZE" type="java.lang.Boolean" />
 	</class>
 </hibernate-mapping>

@@ -64,6 +64,7 @@ import ru.instefa.cafepickpos.util.POSUtil;
 public class DefaultCustomerListView extends CustomerSelector {
 
 	private PosButton btnCreateNewCustomer;
+	private PosButton btnEditCustomer;
 	private CustomerTable customerTable;
 	private POSTextField tfMobile;
 	private POSTextField tfLoyaltyNo;
@@ -191,6 +192,23 @@ public class DefaultCustomerListView extends CustomerSelector {
 		btnHistory.setEnabled(false);
 		panel.add(btnHistory, ""); //$NON-NLS-1$
 
+		btnRemoveCustomer = new PosButton(Messages.getString("CustomerSelectionDialog.26")); //$NON-NLS-1$
+		btnRemoveCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doRemoveCustomerFromTicket();
+			}
+		});
+		panel.add(btnRemoveCustomer, ""); //$NON-NLS-1$
+
+		btnEditCustomer = new PosButton(POSConstants.EDIT.toUpperCase()); //$NON-NLS-1$
+		btnEditCustomer.setFocusable(false);
+		panel.add(btnEditCustomer, ""); //$NON-NLS-1$
+		btnEditCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doEditCustomer();
+			}
+		});
+
 		btnCreateNewCustomer = new PosButton(Messages.getString("CustomerSelectionDialog.25")); //$NON-NLS-1$
 		btnCreateNewCustomer.setFocusable(false);
 		panel.add(btnCreateNewCustomer, ""); //$NON-NLS-1$
@@ -200,13 +218,6 @@ public class DefaultCustomerListView extends CustomerSelector {
 			}
 		});
 
-		btnRemoveCustomer = new PosButton(Messages.getString("CustomerSelectionDialog.26")); //$NON-NLS-1$
-		btnRemoveCustomer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doRemoveCustomerFromTicket();
-			}
-		});
-		panel.add(btnRemoveCustomer, ""); //$NON-NLS-1$
 
 		PosButton btnSelect = new PosButton(Messages.getString("CustomerSelectionDialog.28")); //$NON-NLS-1$
 		btnSelect.addActionListener(new ActionListener() {
@@ -395,6 +406,26 @@ public class DefaultCustomerListView extends CustomerSelector {
 			CustomerListTableModel model = (CustomerListTableModel) customerTable.getModel();
 			model.addItem(selectedCustomer);
 		}
+	}
+
+	protected void doEditCustomer() {
+		boolean setKeyPad = true;
+
+		Customer customer = getSelectedCustomer();
+		if (customer == null)
+			return;
+
+		QuickCustomerForm form = new QuickCustomerForm(setKeyPad);
+		form.setBean(customer);
+		form.enableCustomerFields(true);
+		BeanEditorDialog dialog = new BeanEditorDialog(POSUtil.getBackOfficeWindow(), form);
+		dialog.setResizable(false);
+		dialog.open();
+
+		if (dialog.isCanceled())
+			return;
+		customerListTableModel.fireTableRowsUpdated(customerTable.getSelectedRow(), customerTable.getSelectedRow());
+
 	}
 
 	@Override

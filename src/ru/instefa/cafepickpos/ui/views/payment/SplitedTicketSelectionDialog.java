@@ -229,7 +229,6 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			view = new OrderInfoView(ticketsToShow);
 			OrderInfoDialog dialog = new OrderInfoDialog(view);
 			dialog.showOnlyPrintButton();
-			dialog.setSize(PosUIManager.getSize(400), PosUIManager.getSize(600));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setLocationRelativeTo(Application.getPosWindow());
 			dialog.open();
@@ -418,7 +417,6 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 						view = new OrderInfoView(ticketsToShow);
 						OrderInfoDialog dialog = new OrderInfoDialog(view);
 						dialog.updateView();
-						dialog.setSize(PosUIManager.getSize(400), PosUIManager.getSize(600));
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setLocationRelativeTo(Application.getPosWindow());
 						dialog.setVisible(true);

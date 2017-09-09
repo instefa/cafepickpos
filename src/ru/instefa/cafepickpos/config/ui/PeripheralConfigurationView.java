@@ -36,9 +36,10 @@ import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.LogFactory;
 
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.config.TerminalConfig;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.model.Terminal;

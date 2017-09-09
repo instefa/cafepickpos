@@ -3,12 +3,16 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="ru.instefa.cafepickpos.model.DrawerAssignedHistory" table="DRAWER_ASSIGNED_HISTORY">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 
 		<property column="TIME" name="time" type="java.sql.Timestamp" />
 		<property column="OPERATION" length="60" name="operation" type="java.lang.String" />
-		
+
 		<!-- Associations -->
 
 		<many-to-one class="ru.instefa.cafepickpos.model.User" lazy="false" name="user">

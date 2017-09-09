@@ -18,11 +18,11 @@
 package ru.instefa.cafepickpos.model.dao;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -30,7 +30,6 @@ import org.hibernate.criterion.Restrictions;
 import ru.instefa.cafepickpos.model.KitchenTicket;
 import ru.instefa.cafepickpos.model.KitchenTicket.KitchenTicketStatus;
 import ru.instefa.cafepickpos.model.OrderType;
-import ru.instefa.cafepickpos.model.PrinterGroup;
 import ru.instefa.cafepickpos.model.Ticket;
 import ru.instefa.cafepickpos.swing.PaginatedListModel;
 import ru.instefa.cafepickpos.swing.PaginatedTableModel;
@@ -134,17 +133,13 @@ public class KitchenTicketDAO extends BaseKitchenTicketDAO {
 		}
 	}
 
-	public int getRowCount(String selectedKDSPrinter, OrderType orderType) {
+	public int getRowCount(List<String> selectedKDSPrinters, List<OrderType> orderTypes) {
 		Session session = null;
 		Criteria criteria = null;
 		try {
 			session = createNewSession();
 			criteria = session.createCriteria(getReferenceClass());
-			criteria.add(Restrictions.eq(KitchenTicket.PROP_VOIDED, Boolean.FALSE));
-			criteria.add(Restrictions.eq(KitchenTicket.PROP_STATUS, KitchenTicketStatus.WAITING.name()));
-			if (orderType != null) {
-				criteria.add(Restrictions.eq(KitchenTicket.PROP_TICKET_TYPE, orderType.getName()));
-			}
+			updateCriteria(selectedKDSPrinters, orderTypes, criteria);
 			criteria.setProjection(Projections.rowCount());
 			Number rowCount = (Number) criteria.uniqueResult();
 			if (rowCount != null) {
@@ -156,40 +151,49 @@ public class KitchenTicketDAO extends BaseKitchenTicketDAO {
 		return 0;
 	}
 
-	public void loadKitchenTickets(String selectedKDSPrinter, OrderType orderType, PaginatedListModel listModel) {
+	public void loadKitchenTickets(List<String> selectedKDSPrinters, List<OrderType> orderTypes, PaginatedListModel listModel) {
 		Session session = null;
 		Criteria criteria = null;
 		try {
 			session = createNewSession();
 			criteria = session.createCriteria(getReferenceClass());
-			criteria.add(Restrictions.eq(KitchenTicket.PROP_VOIDED, Boolean.FALSE));
-			criteria.add(Restrictions.eq(KitchenTicket.PROP_STATUS, KitchenTicketStatus.WAITING.name()));
-			if (orderType != null) {
-				criteria.add(Restrictions.eq(KitchenTicket.PROP_TICKET_TYPE, orderType.getName()));
-			}
+			updateCriteria(selectedKDSPrinters, orderTypes, criteria);
 			criteria.setFirstResult(listModel.getCurrentRowIndex());
 			criteria.setMaxResults(listModel.getPageSize());
 			criteria.addOrder(Order.desc(KitchenTicket.PROP_CREATE_DATE));
 
 			List<KitchenTicket> tickets = criteria.list();
-			if (selectedKDSPrinter != null) {
-				for (Iterator iterator = tickets.iterator(); iterator.hasNext();) {
-					KitchenTicket kitchenTicket = (KitchenTicket) iterator.next();
-					PrinterGroup printerGroup = kitchenTicket.getPrinterGroup();
-					if (printerGroup != null && printerGroup.getPrinterNames() != null) {
-						if (!printerGroup.getPrinterNames().contains(selectedKDSPrinter)) {
-							iterator.remove();
-							listModel.setNumRows(listModel.getNumRows() - 1);
-						}
-					}
-				}
-			}
 			if (tickets == null) {
 				tickets = new ArrayList<>();
 			}
 			listModel.setData(tickets);
 		} finally {
 			closeSession(session);
+		}
+	}
+
+	private void updateCriteria(List<String> selectedKDSPrinters, List<OrderType> orderTypes, Criteria criteria) {
+
+		criteria.add(Restrictions.eq(KitchenTicket.PROP_VOIDED, Boolean.FALSE));
+		criteria.add(Restrictions.eq(KitchenTicket.PROP_STATUS, KitchenTicketStatus.WAITING.name()));
+
+		if (orderTypes != null && !orderTypes.isEmpty()) {
+			Disjunction disjunction = Restrictions.disjunction();
+			disjunction.add(Restrictions.isNull(KitchenTicket.PROP_TICKET_TYPE));
+			disjunction.add(Restrictions.eq(KitchenTicket.PROP_TICKET_TYPE, ""));
+			for (OrderType orderType : orderTypes) {
+				disjunction.add(Restrictions.eq(KitchenTicket.PROP_TICKET_TYPE, orderType.getName()));
+			}
+			criteria.add(disjunction);
+		}
+		if (selectedKDSPrinters != null && !selectedKDSPrinters.isEmpty()) {
+			Disjunction disjunction = Restrictions.disjunction();
+			disjunction.add(Restrictions.isNull(KitchenTicket.PROP_PRINTER_NAME));
+			disjunction.add(Restrictions.eq(KitchenTicket.PROP_PRINTER_NAME, ""));
+			for (String printerName : selectedKDSPrinters) {
+				disjunction.add(Restrictions.eq(KitchenTicket.PROP_PRINTER_NAME, printerName));
+			}
+			criteria.add(disjunction);
 		}
 	}
 }

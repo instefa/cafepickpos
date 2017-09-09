@@ -17,6 +17,7 @@
  */
 package ru.instefa.cafepickpos.model.base;
 
+import java.lang.Comparable;
 import java.io.Serializable;
 
 
@@ -31,32 +32,37 @@ import java.io.Serializable;
 
 public abstract class BaseCustomer  implements Comparable, Serializable {
 
-	public static String REF = "Customer";
-	public static String PROP_PICTURE = "picture";
-	public static String PROP_SOCIAL_SECURITY_NUMBER = "socialSecurityNumber";
-	public static String PROP_WORK_PHONE_NO = "workPhoneNo";
-	public static String PROP_VIP = "vip";
-	public static String PROP_LOYALTY_POINT = "loyaltyPoint";
-	public static String PROP_SALUTATION = "salutation";
-	public static String PROP_NOTE = "note";
-	public static String PROP_HOME_PHONE_NO = "homePhoneNo";
-	public static String PROP_COUNTRY = "country";
-	public static String PROP_LAST_NAME = "lastName";
-	public static String PROP_ZIP_CODE = "zipCode";
-	public static String PROP_DOB = "dob";
-	public static String PROP_CITY = "city";
-	public static String PROP_SSN = "ssn";
-	public static String PROP_MOBILE_NO = "mobileNo";
-	public static String PROP_NAME = "name";
-	public static String PROP_STATE = "state";
-	public static String PROP_EMAIL = "email";
-	public static String PROP_CREDIT_SPENT = "creditSpent";
-	public static String PROP_ADDRESS = "address";
-	public static String PROP_AUTO_ID = "autoId";
-	public static String PROP_FIRST_NAME = "firstName";
-	public static String PROP_CREDIT_CARD_NO = "creditCardNo";
-	public static String PROP_CREDIT_LIMIT = "creditLimit";
-	public static String PROP_LOYALTY_NO = "loyaltyNo";
+	public static String REF = "Customer"; //$NON-NLS-1$
+	public static String PROP_EMAIL = "email"; //$NON-NLS-1$
+	public static String PROP_ADDRESS = "address"; //$NON-NLS-1$
+	public static String PROP_TAX_ID = "taxId"; //$NON-NLS-1$
+	public static String PROP_SALUTATION = "salutation"; //$NON-NLS-1$
+	public static String PROP_HOME_PHONE_NO = "homePhoneNo"; //$NON-NLS-1$
+	public static String PROP_NAME = "name"; //$NON-NLS-1$
+	public static String PROP_PICTURE = "picture"; //$NON-NLS-1$
+	public static String PROP_DOB = "dob"; //$NON-NLS-1$
+	public static String PROP_AUTO_ID = "autoId"; //$NON-NLS-1$
+	public static String PROP_MOBILE_NO = "mobileNo"; //$NON-NLS-1$
+	public static String PROP_SOCIAL_SECURITY_NUMBER = "socialSecurityNumber"; //$NON-NLS-1$
+	public static String PROP_FIRST_NAME = "firstName"; //$NON-NLS-1$
+	public static String PROP_ZIP_CODE = "zipCode"; //$NON-NLS-1$
+	public static String PROP_CREDIT_LIMIT = "creditLimit"; //$NON-NLS-1$
+	public static String PROP_CITY = "city"; //$NON-NLS-1$
+	public static String PROP_MIDDLE_NAME = "middleName"; //$NON-NLS-1$
+	public static String PROP_SSN = "ssn"; //$NON-NLS-1$
+	public static String PROP_CREDIT_CARD_NO = "creditCardNo"; //$NON-NLS-1$
+	public static String PROP_PHOTO_ID = "photoId"; //$NON-NLS-1$
+	public static String PROP_TAX_EXEMPT = "taxExempt"; //$NON-NLS-1$
+	public static String PROP_LOYALTY_NO = "loyaltyNo"; //$NON-NLS-1$
+	public static String PROP_NO_TAX = "noTax"; //$NON-NLS-1$
+	public static String PROP_STATE = "state"; //$NON-NLS-1$
+	public static String PROP_NOTE = "note"; //$NON-NLS-1$
+	public static String PROP_LOYALTY_POINT = "loyaltyPoint"; //$NON-NLS-1$
+	public static String PROP_COUNTRY = "country"; //$NON-NLS-1$
+	public static String PROP_LAST_NAME = "lastName"; //$NON-NLS-1$
+	public static String PROP_WORK_PHONE_NO = "workPhoneNo"; //$NON-NLS-1$
+	public static String PROP_VIP = "vip"; //$NON-NLS-1$
+	public static String PROP_CREDIT_SPENT = "creditSpent"; //$NON-NLS-1$
 
 
 	// constructors
@@ -106,18 +112,23 @@ public abstract class BaseCustomer  implements Comparable, Serializable {
 		protected java.lang.Double creditSpent;
 		protected java.lang.String creditCardNo;
 		protected java.lang.String note;
+		protected java.lang.String middleName;
+		protected java.lang.String photoId;
+		protected java.lang.String taxId;
+		protected java.lang.Boolean taxExempt;
+		protected java.lang.Boolean noTax;
 
 	// collections
 	private java.util.List<ru.instefa.cafepickpos.model.DeliveryAddress> deliveryAddresses;
 	private java.util.List<ru.instefa.cafepickpos.model.DeliveryInstruction> deliveryInstructions;
-	private java.util.Map<String,String> properties;
+	private java.util.Map<String, String> properties;
 
 
 
 	/**
 	 * Return the unique identifier of this class
      * @hibernate.id
-     *  generator-class="identity"
+     *  generator-class="ru.instefa.cafepickpos.util.IntegerIdGenerator"
      *  column="AUTO_ID"
      */
 	public java.lang.Integer getAutoId () {
@@ -545,6 +556,91 @@ public abstract class BaseCustomer  implements Comparable, Serializable {
 
 
 	/**
+	 * Return the value associated with the column: MIDDLE_NAME
+	 */
+	public java.lang.String getMiddleName () {
+					return middleName;
+			}
+
+	/**
+	 * Set the value related to the column: MIDDLE_NAME
+	 * @param middleName the MIDDLE_NAME value
+	 */
+	public void setMiddleName (java.lang.String middleName) {
+		this.middleName = middleName;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: PHOTO_ID
+	 */
+	public java.lang.String getPhotoId () {
+					return photoId;
+			}
+
+	/**
+	 * Set the value related to the column: PHOTO_ID
+	 * @param photoId the PHOTO_ID value
+	 */
+	public void setPhotoId (java.lang.String photoId) {
+		this.photoId = photoId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: TAX_ID
+	 */
+	public java.lang.String getTaxId () {
+					return taxId;
+			}
+
+	/**
+	 * Set the value related to the column: TAX_ID
+	 * @param taxId the TAX_ID value
+	 */
+	public void setTaxId (java.lang.String taxId) {
+		this.taxId = taxId;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: TAX_EXEMPT
+	 */
+	public java.lang.Boolean isTaxExempt () {
+								return taxExempt == null ? Boolean.FALSE : taxExempt;
+					}
+
+	/**
+	 * Set the value related to the column: TAX_EXEMPT
+	 * @param taxExempt the TAX_EXEMPT value
+	 */
+	public void setTaxExempt (java.lang.Boolean taxExempt) {
+		this.taxExempt = taxExempt;
+	}
+
+
+
+	/**
+	 * Return the value associated with the column: NO_TAX
+	 */
+	public java.lang.Boolean isNoTax () {
+								return noTax == null ? Boolean.FALSE : noTax;
+					}
+
+	/**
+	 * Set the value related to the column: NO_TAX
+	 * @param noTax the NO_TAX value
+	 */
+	public void setNoTax (java.lang.Boolean noTax) {
+		this.noTax = noTax;
+	}
+
+
+
+	/**
 	 * Return the value associated with the column: deliveryAddresses
 	 */
 	public java.util.List<ru.instefa.cafepickpos.model.DeliveryAddress> getDeliveryAddresses () {
@@ -591,7 +687,7 @@ public abstract class BaseCustomer  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: properties
 	 */
-	public java.util.Map<String,String> getProperties () {
+	public java.util.Map<String, String> getProperties() {
 					return properties;
 			}
 
@@ -599,7 +695,7 @@ public abstract class BaseCustomer  implements Comparable, Serializable {
 	 * Set the value related to the column: properties
 	 * @param properties the properties value
 	 */
-	public void setProperties (java.util.Map<String,String> properties) {
+	public void setProperties(java.util.Map<String, String> properties) {
 		this.properties = properties;
 	}
 
@@ -612,7 +708,7 @@ public abstract class BaseCustomer  implements Comparable, Serializable {
 		if (!(obj instanceof ru.instefa.cafepickpos.model.Customer)) return false;
 		else {
 			ru.instefa.cafepickpos.model.Customer customer = (ru.instefa.cafepickpos.model.Customer) obj;
-			if (null == this.getAutoId() || null == customer.getAutoId()) return false;
+			if (null == this.getAutoId() || null == customer.getAutoId()) return this == obj;
 			else return (this.getAutoId().equals(customer.getAutoId()));
 		}
 	}

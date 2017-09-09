@@ -3,16 +3,20 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="ru.instefa.cafepickpos.model.RecepieItem" table="RECEPIE_ITEM">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
-		
+
 		<property name="percentage" column="PERCENTAGE" type="java.lang.Double" />
 		<property name="inventoryDeductable" column="INVENTORY_DEDUCTABLE" type="java.lang.Boolean" />
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.InventoryItem" lazy="false" name="inventoryItem">
 			<column name="INVENTORY_ITEM" />
 		</many-to-one>
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.Recepie" name="recepie" not-null="true">
 			<column name="RECEPIE_ID" />
 		</many-to-one>

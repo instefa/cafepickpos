@@ -27,9 +27,10 @@ import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.util.Locale;
 
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.customer.CustomerSelector;
 import ru.instefa.cafepickpos.customer.DefaultCustomerListView;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.model.OrderType;
 import ru.instefa.cafepickpos.ui.views.order.ViewPanel;

@@ -17,8 +17,9 @@
  */
 package ru.instefa.cafepickpos.actions;
 
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.POSConstants;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.FloorLayoutPlugin;
 import ru.instefa.cafepickpos.model.UserPermission;
 

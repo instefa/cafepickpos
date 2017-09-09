@@ -48,6 +48,7 @@ import ru.instefa.cafepickpos.model.dao.MenuItemDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemModifierGroupDAO;
 import ru.instefa.cafepickpos.model.dao.MenuModifierDAO;
 import ru.instefa.cafepickpos.model.dao.MenuModifierGroupDAO;
+import ru.instefa.cafepickpos.model.dao.TaxDAO;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 import ru.instefa.cafepickpos.util.datamigrate.Elements;
 
@@ -102,8 +103,7 @@ public class DataImportAction extends AbstractAction {
 				for (Tax tax : taxes) {
 					objectMap.put(tax.getUniqueId(), tax);
 					tax.setId(1);
-
-					//TaxDAO.getInstance().saveOrUpdate(tax);
+					TaxDAO.getInstance().save(tax);
 				}
 			}
 

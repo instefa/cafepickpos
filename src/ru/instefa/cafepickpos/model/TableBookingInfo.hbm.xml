@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
-	<class lazy="false" name="ru.instefa.cafepickpos.model.TableBookingInfo"
-		table="TABLE_BOOKING_INFO">
+	<class lazy="false" name="ru.instefa.cafepickpos.model.TableBookingInfo" table="TABLE_BOOKING_INFO">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 
 
@@ -29,6 +32,8 @@
         <property column="COMMENT" name="comment" type="string" length="500" />
 
 		<!-- Associations -->
+
+
 		<bag name="tables" cascade="none" inverse="false" lazy="false" table="TABLE_BOOKING_MAPPING">
 			<key column="BOOKING_ID" />
 			<many-to-many column="TABLE_ID" class="ru.instefa.cafepickpos.model.ShopTable" />
@@ -41,6 +46,10 @@
 		<many-to-one class="ru.instefa.cafepickpos.model.Customer" lazy="false" name="customer">
 			<column name="customer_id" />
 		</many-to-one>
+
+
+
+
 
 	</class>
 </hibernate-mapping>

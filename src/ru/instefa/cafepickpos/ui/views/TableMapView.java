@@ -27,7 +27,8 @@ import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.util.Locale;
 
-import ru.instefa.cafepickpos.extension.ExtensionManager;
+import com.floreantpos.extension.ExtensionManager;
+
 import ru.instefa.cafepickpos.extension.FloorLayoutPlugin;
 import ru.instefa.cafepickpos.model.OrderType;
 import ru.instefa.cafepickpos.ui.tableselection.DefaultTableSelectionView;

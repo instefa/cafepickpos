@@ -32,11 +32,11 @@ import javax.swing.event.ChangeListener;
 import net.miginfocom.swing.MigLayout;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.exceptions.PosException;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.TicketImportPlugin;
 import ru.instefa.cafepickpos.ui.dialog.POSDialog;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;

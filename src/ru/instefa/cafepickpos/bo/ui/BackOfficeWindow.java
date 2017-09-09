@@ -38,6 +38,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.actions.AboutAction;
@@ -87,7 +88,6 @@ import ru.instefa.cafepickpos.bo.actions.ViewGratuitiesAction;
 import ru.instefa.cafepickpos.config.AppConfig;
 import ru.instefa.cafepickpos.config.TerminalConfig;
 import ru.instefa.cafepickpos.customPayment.CustomPaymentBrowserAction;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.main.Application;
 import ru.instefa.cafepickpos.model.User;

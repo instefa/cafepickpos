@@ -3,9 +3,13 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="ru.instefa.cafepickpos.model.Recepie" table="RECEPIE">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
-		
+
 		<many-to-one class="ru.instefa.cafepickpos.model.MenuItem" lazy="false" name="menuItem">
 			<column name="MENU_ITEM" />
 		</many-to-one>
@@ -14,7 +18,7 @@
 			<key>
 				<column name="RECEPIE_ID" />
 			</key>
-			<one-to-many class="ru.instefa.cafepickpos.model.RecepieItem"  />
+			<one-to-many class="ru.instefa.cafepickpos.model.RecepieItem" />
 		</bag>
 	</class>
 </hibernate-mapping>

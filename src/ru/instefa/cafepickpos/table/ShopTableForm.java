@@ -34,13 +34,12 @@ import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.hibernate.StaleObjectStateException;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.bo.ui.BOMessageDialog;
 import ru.instefa.cafepickpos.exceptions.IllegalModelStateException;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.FloorLayoutPlugin;
 import ru.instefa.cafepickpos.model.ShopTable;
 import ru.instefa.cafepickpos.model.ShopTableType;

@@ -40,6 +40,7 @@ import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
 import org.apache.commons.logging.LogFactory;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.IconFactory;
 import ru.instefa.cafepickpos.Messages;
@@ -50,7 +51,6 @@ import ru.instefa.cafepickpos.config.ui.DatabaseConfigurationDialog;
 import ru.instefa.cafepickpos.demo.KitchenDisplayView;
 import ru.instefa.cafepickpos.exceptions.ShiftException;
 import ru.instefa.cafepickpos.exceptions.UserNotFoundException;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.extension.OrderServiceFactory;
 import ru.instefa.cafepickpos.main.Application;

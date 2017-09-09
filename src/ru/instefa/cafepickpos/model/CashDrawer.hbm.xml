@@ -3,7 +3,11 @@
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
 	<class lazy="false" name="ru.instefa.cafepickpos.model.CashDrawer" table="CASH_DRAWER">
 		<id column="ID" name="id" type="java.lang.Integer">
-			<generator class="identity" />
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
 		</id>
 
 		<set cascade="all" inverse="true" lazy="false" name="currencyBalanceList">
@@ -17,6 +21,6 @@
 		<many-to-one class="ru.instefa.cafepickpos.model.Terminal" cascade="none" lazy="false" name="terminal">
 			<column name="TERMINAL_ID" />
 		</many-to-one>
-		
+
 	</class>
 </hibernate-mapping>

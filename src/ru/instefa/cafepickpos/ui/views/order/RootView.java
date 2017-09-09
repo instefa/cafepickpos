@@ -24,12 +24,12 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.bo.ui.BackOfficeWindow;
 import ru.instefa.cafepickpos.config.TerminalConfig;
 import ru.instefa.cafepickpos.demo.KitchenDisplayView;
 import ru.instefa.cafepickpos.exceptions.TicketAlreadyExistsException;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.OrderServiceExtension;
 import ru.instefa.cafepickpos.extension.OrderServiceFactory;
 import ru.instefa.cafepickpos.model.OrderType;

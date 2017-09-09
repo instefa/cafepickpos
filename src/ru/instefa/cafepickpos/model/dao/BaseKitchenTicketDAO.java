@@ -19,6 +19,7 @@ package ru.instefa.cafepickpos.model.dao;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import ru.instefa.cafepickpos.model.dao.KitchenTicketDAO;
 import org.hibernate.criterion.Order;
 
 /**

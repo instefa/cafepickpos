@@ -1211,7 +1211,7 @@ public class TicketDAO extends BaseTicketDAO {
 					Ticket ticket = new Ticket();
 					ticket.setId(Integer.valueOf("" + row[0]));
 					ticket.setDueAmount(Double.valueOf("" + row[1]));
-					ticket.setCreateDate((Date) row[2]);
+					ticket.setCreateDate((Date) row[2]); // 20170831, pymancer, from 1.4 1753
 					return ticket;
 				}
 

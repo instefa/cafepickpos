@@ -16,7 +16,7 @@
  * ************************************************************************
  */
 /*
- * SplitTicketView.java
+ * SplitTicketDialog.java
  *
  * Created on September 3, 2006, 11:11 PM
  */
@@ -249,7 +249,7 @@ public class SplitTicketDialog extends POSDialog {
 
 	private synchronized void btnFinishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishActionPerformed
 		if (mainTicketView.getTicket().getTicketItems().isEmpty()) {
-			POSMessageDialog.showMessage(POSUtil.getFocusedWindow(), Messages.getString("SplitTicketDialog.1")); //$NON-NLS-1$
+			POSMessageDialog.showMessage(POSUtil.getFocusedWindow(), Messages.getString("SplitTicketDialog.1"));
 			return;
 		}
 		Session session = null;
@@ -410,7 +410,7 @@ public class SplitTicketDialog extends POSDialog {
 			updateModel(originalTicket);
 			updateModel(splitTicket);
 		}
-		splitTicket.addProperty(Ticket.SPLIT, "true"); //$NON-NLS-1$
+		splitTicket.addProperty(Ticket.SPLIT, "true");
 		splitTicket.addProperty(Ticket.SPLIT_NUMBER, String.valueOf(view.getViewNumber()));
 		splitTicket.addProperty(Ticket.ORIGINAL_SPLIT_TICKET_ID, String.valueOf(originalTicket.getId()));
 		TicketDAO.getInstance().saveOrUpdate(splitTicket, session);

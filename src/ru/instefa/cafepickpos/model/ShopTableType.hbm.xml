@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ru.instefa.cafepickpos.model">
-  <class lazy="false" name="ru.instefa.cafepickpos.model.ShopTableType" table="SHOP_TABLE_TYPE">
-    
-    <id column="ID" name="id" type="java.lang.Integer">
-      <generator class="identity"/>
-    </id>
-    
-    <property column="DESCRIPTION" name="description" type="java.lang.String" length="120"/>
-    <property column="NAME" name="name" type="java.lang.String" length="40"/>
-    
+	<class lazy="false" name="ru.instefa.cafepickpos.model.ShopTableType" table="SHOP_TABLE_TYPE">
 
-  </class>
+		<id column="ID" name="id" type="java.lang.Integer">
+			<generator class="hilo">
+				<param name="table">id_table</param>
+				<param name="column">next_value</param>
+				<param name="max_lo">1</param>
+			</generator>
+		</id>
+
+		<property column="DESCRIPTION" name="description" type="java.lang.String" length="120" />
+		<property column="NAME" name="name" type="java.lang.String" length="40" />
+
+
+	</class>
 </hibernate-mapping>

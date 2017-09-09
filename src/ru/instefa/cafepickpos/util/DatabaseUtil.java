@@ -287,6 +287,7 @@ public class DatabaseUtil {
 			orderType.setName("RETAIL");
 			orderType.setShowTableSelection(false);
 			orderType.setCloseOnPaid(true);
+			orderType.setRetailOrder(true);
 			orderType.setEnabled(true);
 			orderType.setShouldPrintToKitchen(false);
 			orderType.setShowInLoginScreen(true);

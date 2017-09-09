@@ -68,8 +68,8 @@ public class OrderInfoView extends JPanel {
 			Ticket ticket = (Ticket) tickets.get(i);
 
 			TicketPrintProperties printProperties = new TicketPrintProperties("*** " + 
-				POSConstants.ORDER + 
-				" " + ticket.getId() + " ***", false, true, true);
+                POSConstants.ORDER + 
+                " " + ticket.getId() + " ***", false, true, true);
 			HashMap map = ReceiptPrintService.populateTicketProperties(ticket, printProperties, null);
 			map.put(JRParameter.IS_IGNORE_PAGINATION, true);
 			JasperPrint jasperPrint = ReceiptPrintService.createPrint(ticket, map, null);

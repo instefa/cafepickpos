@@ -57,6 +57,7 @@ public class OrderInfoDialog extends POSDialog {
 		setTitle(Messages.getString("OrderInfoDialog.0")); //$NON-NLS-1$
 
 		createUI();
+		setSize(500, 650);
 	}
 
 	public void createUI() {

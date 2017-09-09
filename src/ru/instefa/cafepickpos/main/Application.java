@@ -42,6 +42,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.floreantpos.extension.FloreantPlugin;
+import com.floreantpos.extension.ExtensionManager;
 
 import ru.instefa.cafepickpos.IconFactory;
 import ru.instefa.cafepickpos.Messages;
@@ -54,9 +55,9 @@ import ru.instefa.cafepickpos.config.TerminalConfig;
 import ru.instefa.cafepickpos.config.ui.DatabaseConfigurationDialog;
 import ru.instefa.cafepickpos.exceptions.DatabaseConnectionException;
 import ru.instefa.cafepickpos.exceptions.UserNotFoundException;
-import ru.instefa.cafepickpos.extension.ExtensionManager;
 import ru.instefa.cafepickpos.extension.InginicoPlugin;
 import ru.instefa.cafepickpos.extension.PaymentGatewayPlugin;
+import ru.instefa.cafepickpos.extension.PluginSupport;
 import ru.instefa.cafepickpos.model.DeliveryConfiguration;
 import ru.instefa.cafepickpos.model.OrderType;
 import ru.instefa.cafepickpos.model.PosPrinters;
@@ -213,9 +214,9 @@ public class Application {
 			Boolean shouldBeUpdated = POSUtil.shouldBeUpdated(newVersion);
 			if (shouldBeUpdated != null && shouldBeUpdated)  {
 				UpdateDialog dialog = new UpdateDialog(newVersion);
-				dialog.pack();
-				dialog.open();
-			}
+					dialog.pack();
+					dialog.open();
+				}
 		} catch (Exception ex) {
 			PosLog.error(getClass(), ex);
 		}
@@ -267,7 +268,7 @@ public class Application {
 	}
 
 	private void initPlugins() {
-		//ExtensionManager.getInstance().initialize(Main.class);
+		ExtensionManager.getInstance().initialize(PluginSupport.class);
 		List<FloreantPlugin> plugins = ExtensionManager.getPlugins();
 		for (FloreantPlugin floreantPlugin : plugins) {
 			floreantPlugin.initUI();
