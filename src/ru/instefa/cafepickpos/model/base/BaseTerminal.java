@@ -89,9 +89,9 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 		protected java.lang.String receiptPrinterId;
 		protected java.util.Date validFrom;
 		protected java.util.Date validTo;
-	protected long sequenceStart;
-	protected long sequenceEnd;
-	protected long nextAvailableSequence;
+		protected java.lang.Long sequenceStart;
+		protected java.lang.Long sequenceEnd;
+		protected java.lang.Long nextAvailableSequence;
 
 	// many to one
 	private ru.instefa.cafepickpos.model.User assignedUser;
@@ -344,7 +344,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: SEQUENCE_START
 	 */
-	public long getSequenceStart() {
+	public java.lang.Long getSequenceStart () {
 					return sequenceStart;
 			}
 
@@ -352,7 +352,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	 * Set the value related to the column: SEQUENCE_START
 	 * @param sequenceStart the SEQUENCE_START value
 	 */
-	public void setSequenceStart(long sequenceStart) {
+	public void setSequenceStart (java.lang.Long sequenceStart) {
 		this.sequenceStart = sequenceStart;
 	}
 
@@ -361,7 +361,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: SEQUENCE_END
 	 */
-	public long getSequenceEnd() {
+	public java.lang.Long getSequenceEnd () {
 					return sequenceEnd;
 			}
 
@@ -369,7 +369,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	 * Set the value related to the column: SEQUENCE_END
 	 * @param sequenceEnd the SEQUENCE_END value
 	 */
-	public void setSequenceEnd(long sequenceEnd) {
+	public void setSequenceEnd (java.lang.Long sequenceEnd) {
 		this.sequenceEnd = sequenceEnd;
 	}
 
@@ -378,7 +378,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	/**
 	 * Return the value associated with the column: NEXT_AVAILABLE_SEQUENCE
 	 */
-	public long getNextAvailableSequence() {
+	public java.lang.Long getNextAvailableSequence () {
 		return nextAvailableSequence;
 			}
 
@@ -386,7 +386,7 @@ public abstract class BaseTerminal  implements Comparable, Serializable {
 	 * Set the value related to the column: NEXT_AVAILABLE_SEQUENCE
 	 * @param nextAvailableSequence the NEXT_AVAILABLE_SEQUENCE value
 	 */
-	public void setNextAvailableSequence(long nextAvailableSequence) {
+	public void setNextAvailableSequence (java.lang.Long nextAvailableSequence) {
 		this.nextAvailableSequence = nextAvailableSequence;
 	}
 

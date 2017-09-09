@@ -20,9 +20,9 @@
 		<property column="RECEIPT_PRINTER_ID" length="128" name="receiptPrinterId" type="java.lang.String" />
 		<property column="VALID_FROM" name="validFrom" type="java.util.Date" />
 		<property column="VALID_TO" name="validTo" type="java.util.Date" />
-		<property column="SEQUENCE_START" name="sequenceStart" type="long" />
-		<property column="SEQUENCE_END" name="sequenceEnd" type="long" />
-		<property column="NEXT_AVAILABLE_SEQUENCE" name="nextAvailableSequence" type="long" />
+		<property column="SEQUENCE_START" name="sequenceStart" type="java.lang.Long" />
+		<property column="SEQUENCE_END" name="sequenceEnd" type="java.lang.Long" />
+		<property column="NEXT_AVAILABLE_SEQUENCE" name="nextAvailableSequence" type="java.lang.Long" />
 
 		<!-- Associations -->
 		<many-to-one class="ru.instefa.cafepickpos.model.User" lazy="false" name="assignedUser">
