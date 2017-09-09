@@ -424,11 +424,6 @@
 			<version>0.9.1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.orocube</groupId>
-			<artifactId>orocube-common-classes</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>
@@ -478,10 +473,15 @@
             <artifactId>xmpp-core-client</artifactId>
             <version>0.7.4</version>
         </dependency>
+		<dependency>
+			<groupId>com.orocube</groupId>
+			<artifactId>orocube-common-classes</artifactId>
+			<version>1.4.2</version>
+		</dependency>
         <dependency> 
             <groupId>com.floreantpos</groupId> 
             <artifactId>ploader</artifactId> 
-            <version>1.1</version> 
+            <version>1.1.2</version> 
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -496,6 +496,19 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+		<repository>
+			<id>oro</id>
+			<url>http://team.orocube.net:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+    
 	<organization>
 		<name>INSTEFA LLC</name>
 		<url>https://instefa.ru</url>
