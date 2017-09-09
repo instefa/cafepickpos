@@ -22,6 +22,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.model.base.BaseGuestCheckPrint;
 import ru.instefa.cafepickpos.model.dao.TicketDAO;
 
@@ -65,11 +66,11 @@ public class GuestCheckPrint extends BaseGuestCheckPrint {
 		minutes = minutes % 60;
 		seconds = seconds % 60;
 
-		String strDays = days + " days, ";
-		String strHours = hours + " hours, ";
-		String strMins = minutes + " mins";
-		String strSec = seconds + " secs";
-		String strAgo = " ago";
+		String strDays = days + " " + Messages.getString("DateUtil.0") + ", ";
+		String strHours = hours + " " + Messages.getString("DateUtil.1") + ", ";
+		String strMins = minutes + " " + Messages.getString("DateUtil.2");
+		String strSec = seconds + " " + Messages.getString("DateUtil.3");
+		String strAgo = " " + Messages.getString("DateUtil.4");
 
 		String fullTime = strDays + strHours + strMins + strAgo;
 		String timeWithoutDay = strHours + strMins + strAgo;
@@ -89,7 +90,7 @@ public class GuestCheckPrint extends BaseGuestCheckPrint {
 			return timeWithoutMin;
 		}
 		else {
-			return "not printed yet";
+			return Messages.getString("DateUtil.5");
 		}
 	}
 
