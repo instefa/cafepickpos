@@ -270,11 +270,10 @@ public class ModifierExplorer extends TransparentPanel {
 	private class ModifierExplorerModel extends ListTableModel {
 
 		public ModifierExplorerModel() {
-
-			super(new String[] { ru.instefa.cafepickpos.POSConstants.ID, ru.instefa.cafepickpos.POSConstants.NAME, POSConstants.TRANSLATED_NAME,
-					ru.instefa.cafepickpos.POSConstants.PRICE + " (" + currencySymbol + ")", ru.instefa.cafepickpos.POSConstants.EXTRA_PRICE, //$NON-NLS-1$ //$NON-NLS-2$
-					ru.instefa.cafepickpos.POSConstants.TAX + "(%)", ru.instefa.cafepickpos.POSConstants.MODIFIER_GROUP, POSConstants.BUTTON_COLOR, POSConstants.SORT_ORDER }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
+			super(new String[] {POSConstants.ID, POSConstants.NAME, POSConstants.TRANSLATED_NAME,
+					Messages.getString("ModifierExplorer.9") + " (" + currencySymbol + ")", POSConstants.EXTRA_PRICE,
+					POSConstants.TAX + " (%)", POSConstants.MODIFIER_GROUP,
+					POSConstants.BUTTON_COLOR, POSConstants.SORT_ORDER });
 		}
 
 		public Object getValueAt(int rowIndex, int columnIndex) {
