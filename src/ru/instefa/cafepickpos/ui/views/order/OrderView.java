@@ -119,16 +119,16 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 
 	private JPanel actionButtonPanel = new JPanel(new MigLayout("fill, ins 2, hidemode 3", "sg, fill", ""));
 
-	private ru.instefa.cafepickpos.swing.PosButton btnHold = new ru.instefa.cafepickpos.swing.PosButton(ru.instefa.cafepickpos.POSConstants.HOLD_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnDone = new ru.instefa.cafepickpos.swing.PosButton(ru.instefa.cafepickpos.POSConstants.SAVE_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnSend = new ru.instefa.cafepickpos.swing.PosButton(ru.instefa.cafepickpos.POSConstants.SEND_TO_KITCHEN);
-	private ru.instefa.cafepickpos.swing.PosButton btnCancel = new ru.instefa.cafepickpos.swing.PosButton(POSConstants.CANCEL_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnGuestNo = new ru.instefa.cafepickpos.swing.PosButton(POSConstants.GUEST_NO_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnSeatNo = new ru.instefa.cafepickpos.swing.PosButton(Messages.getString("OrderView.1"));
-	private ru.instefa.cafepickpos.swing.PosButton btnMisc = new ru.instefa.cafepickpos.swing.PosButton(POSConstants.MISC_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnOrderType = new ru.instefa.cafepickpos.swing.PosButton(POSConstants.ORDER_TYPE_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnTableNumber = new ru.instefa.cafepickpos.swing.PosButton(POSConstants.TABLE_NO_BUTTON_TEXT);
-	private ru.instefa.cafepickpos.swing.PosButton btnCustomer = new PosButton(POSConstants.CUSTOMER_SELECTION_BUTTON_TEXT);
+	private PosButton btnHold = new PosButton(POSConstants.HOLD_BUTTON_TEXT);
+	private PosButton btnDone = new PosButton(POSConstants.SAVE_BUTTON_TEXT);
+	private PosButton btnSend = new PosButton(POSConstants.SEND_TO_KITCHEN);
+	private PosButton btnCancel = new PosButton(POSConstants.CANCEL_BUTTON_TEXT);
+	private PosButton btnGuestNo = new PosButton(POSConstants.GUEST_NO_BUTTON_TEXT);
+	private PosButton btnSeatNo = new PosButton(Messages.getString("OrderView.1"));
+	private PosButton btnMisc = new PosButton(POSConstants.MISC_BUTTON_TEXT);
+	private PosButton btnOrderType = new PosButton(POSConstants.ORDER_TYPE_BUTTON_TEXT);
+	private PosButton btnTableNumber = new PosButton(POSConstants.TABLE_NO_BUTTON_TEXT);
+	private PosButton btnCustomer = new PosButton(POSConstants.CUSTOMER_SELECTION_BUTTON_TEXT);
 	private PosButton btnCookingInstruction = new PosButton(IconFactory.getIcon("cooking_instruction.png"));
 	//	private PosButton btnAddOn = new PosButton(POSConstants.ADD_ON);
 	private PosButton btnDiscount = new PosButton(Messages.getString("TicketView.43")); //$NON-NLS-1$
@@ -395,7 +395,7 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 						else {
 							if (!user2.hasPermission(UserPermission.HOLD_TICKET)) {
 							POSMessageDialog.showError(Application.getPosWindow(),
-													   Messages.getString("PosAction.3"));
+													   Messages.getString("PosAction.2"));
 								return;
 							}
 						}
