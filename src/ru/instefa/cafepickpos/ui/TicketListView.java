@@ -460,26 +460,12 @@ public class TicketListView extends JPanel implements ITicketList {
 					return ticket.getCreateDate();
 
 				case 4:
-					String customerName = ticket.getProperty(Ticket.CUSTOMER_NAME);
-
-					if (customerName != null && !customerName.equals("")) { //$NON-NLS-1$
-						return customerName;
-					}
-
-					String customerMobile = ticket.getProperty(Ticket.CUSTOMER_MOBILE);
-
-					if (customerMobile != null) {
-						return customerMobile;
-					}
-
-					return Messages.getString("TicketListView.6"); //$NON-NLS-1$
+					return ticket.getCustomerName();
 
 				case 5:
-
 					return ticket.getDeliveryAddress();
 
 				case 6:
-
 					return ticket.getDeliveryDate();
 
 				case 7:

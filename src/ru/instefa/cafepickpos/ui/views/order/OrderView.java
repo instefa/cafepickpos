@@ -655,7 +655,7 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 			seatNumber = (int) dialog.getValue();
 		}
 
-		btnSeatNo.setText(Messages.getString("OrderView.1") + " " + seatNumber);
+		btnSeatNo.setText(Messages.getString("OrderView.1") + ": " + seatNumber);
 		btnSeatNo.putClientProperty("SEAT_NO", seatNumber);
 		doAddSeatTreatTicketItem(seatNumber);
 	}
@@ -744,8 +744,7 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 			Customer customer = dialog.getSelectedCustomer();
 			if (customer != null) {
 				currentTicket.setCustomer(customer);
-				btnCustomer.setText("<html><body><center>" + Messages.getString("OrderView.9") + " " +
-	                dialog.getSelectedCustomer().getName() + "</center></body></html>");
+				renderCustomer(dialog.getSelectedCustomer().toString());
 			}
 		}
 	}
@@ -847,9 +846,9 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 				int lastSeatNumber = getLastSeatNumber();
 				btnSeatNo.putClientProperty("SEAT_NO", lastSeatNumber);
 				if (lastSeatNumber > 0)
-					btnSeatNo.setText(Messages.getString("OrderView.0") + lastSeatNumber);
+					btnSeatNo.setText(Messages.getString("OrderView.1") + ": " + lastSeatNumber);
 				else
-					btnSeatNo.setText(Messages.getString("OrderView.0"));
+					btnSeatNo.setText(Messages.getString("OrderView.1"));
 			}
 
 			if (!type.isShowTableSelection()) {
@@ -876,11 +875,19 @@ public class OrderView extends ViewPanel implements PaymentListener, TicketEditL
 
 				btnGuestNo.setText(Messages.getString("OrderView.7") + ": " + String.valueOf(currentTicket.getNumberOfGuests()));
 			}
+
+			renderCustomer(currentTicket.getCustomerName());
+			
 			OrderServiceExtension orderService = (OrderServiceExtension) ExtensionManager.getPlugin(OrderServiceExtension.class);
 			btnDeliveryInfo.setVisible(orderService != null && type.isDelivery() && type.isRequiredCustomerData());
 		}
 	}
 
+	private void renderCustomer(String customerName) {
+		btnCustomer.setText("<html><body><center>" + Messages.getString("OrderView.9") + " " +
+				customerName + "</center></body></html>");
+	}
+	
 	private String getTableNumbers(List<Integer> numbers) {
 
 		String tableNumbers = "";
