@@ -28,6 +28,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 
+import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.config.TerminalConfig;
 
 public class Main {
@@ -59,26 +60,38 @@ public class Main {
 	}
 
 	public static void restart() throws IOException, InterruptedException, URISyntaxException {
+		/**
+		 * Restarts application. Handles .jar, .exe, IDE.
+		 */
 		final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-		//		Properties properties = System.getProperties();
-		//		Set<Object> keySet = properties.keySet();
-		//		for (Object object : keySet) {
-		//			PosLog.debug(getClass(),object + ":"+properties.getProperty((String) object));
-		//		}
+		final String classPath = System.getProperty("java.class.path"); //$NON-NLS-1$
+		final String mainClass = System.getProperty("sun.java.command"); //$NON-NLS-1$
 
-		String classPath = System.getProperty("java.class.path"); //$NON-NLS-1$
-		String mainClass = System.getProperty("sun.java.command"); //$NON-NLS-1$
-
-		/* Build command: java -jar application.jar */
+		// Build command: java -jar application.jar
 		final ArrayList<String> command = new ArrayList<String>();
-		command.add(javaBin);
-		command.add("-cp"); //$NON-NLS-1$
-		command.add(classPath);
+		if(!mainClass.endsWith(".exe")) {
+			command.add(javaBin);
+			command.add("-cp");
+			command.add(classPath);
+			command.add("-splash:config\\splash.gif");
+			if(mainClass.endsWith(".jar")) {
+				command.add("-jar");
+			}
+		}
 		command.add(mainClass);
-
 		final ProcessBuilder builder = new ProcessBuilder(command);
-		builder.start();
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                try {
+                	builder.start();
+                } catch (IOException e) {
+                    PosLog.error(Main.class, e.getMessage());
+                }
+            }
+        });
+		// custom code can be executed before restarting
 		Application.getInstance().exitSystem(0);
 	}
 }

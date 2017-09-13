@@ -17,9 +17,6 @@
  */
 package ru.instefa.cafepickpos.util;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -56,7 +53,6 @@ import ru.instefa.cafepickpos.model.UserPermission;
 import ru.instefa.cafepickpos.model.UserType;
 import ru.instefa.cafepickpos.model.dao.CurrencyDAO;
 import ru.instefa.cafepickpos.model.dao.DiscountDAO;
-import ru.instefa.cafepickpos.model.dao.GenericDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemSizeDAO;
 import ru.instefa.cafepickpos.model.dao.MultiplierDAO;
 import ru.instefa.cafepickpos.model.dao.OrderTypeDAO;
@@ -102,41 +98,6 @@ public class DatabaseUtil {
 			session.close();
 		} catch (Exception e) {
 			throw new DatabaseConnectionException(e);
-		}
-	}
-
-	public static void updateLegacyDatabase() {
-		try {
-			dropModifiedTimeColumn();
-		} catch (SQLException e) {
-			logger.error(e);
-		}
-	}
-
-	private static void dropModifiedTimeColumn() throws SQLException {
-		GenericDAO dao = new GenericDAO();
-		Session session = null;
-
-		try {
-			session = dao.createNewSession();
-			Connection connection = session.connection();
-			String[] tables = { "CUSTOMER", "GRATUITY", "INVENTORY_GROUP", "INVENTORY_ITEM", "INVENTORY_LOCATION", "INVENTORY_META_CODE",
-					"INVENTORY_TRANSACTION", "INVENTORY_TRANSACTION_TYPE", "INVENTORY_UNIT", "INVENTORY_VENDOR", "INVENTORY_WAREHOUSE", "KITCHEN_TICKET",
-					"KITCHEN_TICKET_ITEM", "MENUITEM_MODIFIERGROUP", "MENU_CATEGORY", "MENU_GROUP", "MENU_ITEM", "MENU_MODIFIER", "MENU_MODIFIER_GROUP",
-					"PURCHASE_ORDER", "TAX", "TERMINAL", "TICKET", "TICKETITEM_MODIFIERGROUP", "TICKET_ITEM", "TICKETITEM_DISCOUNT", "TRANSACTIONS", "USERS",
-					"ZIP_CODE_VS_DELIVERY_CHARGE" };
-
-			for (String table : tables) {
-				try {
-					Statement statement = connection.createStatement();
-					statement.execute("ALTER TABLE " + table + " DROP COLUMN MODIFIED_TIME");
-				} catch (Exception e) {
-					//logger.error(e);
-				}
-			}
-			connection.commit();
-		} finally {
-			dao.closeSession(session);
 		}
 	}
 
@@ -511,9 +472,7 @@ public class DatabaseUtil {
 
 	public static Configuration initialize() throws DatabaseConnectionException {
 		try {
-
 			return _RootDAO.reInitialize();
-
 		} catch (Exception e) {
 			logger.error(e);
 			throw new DatabaseConnectionException(e);

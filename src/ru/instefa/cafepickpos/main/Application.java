@@ -40,14 +40,18 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import com.jgoodies.looks.plastic.theme.ExperienceBlue;
+import com.orocube.common.util.TerminalUtil;
 import com.floreantpos.extension.FloreantPlugin;
 
+import ru.instefa.cafepickpos.Database;
 import ru.instefa.cafepickpos.IconFactory;
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.bo.ui.BackOfficeWindow;
+import ru.instefa.cafepickpos.config.AppConfig;
 import ru.instefa.cafepickpos.config.AppProperties;
 import ru.instefa.cafepickpos.config.CardConfig;
 import ru.instefa.cafepickpos.config.TerminalConfig;
@@ -87,13 +91,8 @@ import ru.instefa.cafepickpos.util.DatabaseUtil;
 import ru.instefa.cafepickpos.util.GlobalConfigUtil;
 import ru.instefa.cafepickpos.util.POSUtil;
 import ru.instefa.cafepickpos.util.ShiftUtil;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
-import com.orocube.common.util.TerminalUtil;
 
 public class Application {
-	private static Log logger = LogFactory.getLog(Application.class);
-
 	private boolean developmentMode = false;
 
 	private Terminal terminal;
@@ -164,7 +163,6 @@ public class Application {
 			posWindow.updateView();
 
 			DatabaseUtil.checkConnection(DatabaseUtil.initialize());
-			DatabaseUtil.updateLegacyDatabase();
 
 			initTerminal();
 			initOrderTypes();
@@ -190,17 +188,20 @@ public class Application {
 				new PosServer();
 			}
 		} catch (DatabaseConnectionException e) {
-			e.printStackTrace();
-			PosLog.error(getClass(), e);
+			PosLog.error(getClass(), e.getMessage());
+			
+			String msg = Messages.getString("Application.0");
+			if (AppConfig.getDatabaseProviderName().equalsIgnoreCase(Database.DERBY_SINGLE.getProviderName())) {
+				msg = Messages.getString("Application.40");
+			}
 
-			int option = JOptionPane.showConfirmDialog(getPosWindow(), Messages.getString("Application.0"),
-					Messages.getString(POSConstants.POS_MESSAGE_ERROR), JOptionPane.YES_NO_OPTION); //$NON-NLS-1$ //$NON-NLS-2$
+			int option = JOptionPane.showConfirmDialog(getPosWindow(), msg,
+				Messages.getString("Application.51"), JOptionPane.YES_NO_OPTION);
 			if (option == JOptionPane.YES_OPTION) {
 				DatabaseConfigurationDialog.show(Application.getPosWindow());
 			}
 		} catch (Exception e) {
-			POSMessageDialog.showError(getPosWindow(), e.getMessage(), e);
-			logger.error(e);
+			POSMessageDialog.showError(getPosWindow(), e.getMessage());
 		} finally {
 			getPosWindow().setGlassPaneVisible(false);
 		}
@@ -434,7 +435,6 @@ public class Application {
 			}
 		}
 		else if (selectedValue.equals(Messages.getString("Application.5"))) { //$NON-NLS-1$
-			posWindow.saveSizeAndLocation();
             exitSystem(0);
 		}
 		else {
@@ -449,7 +449,9 @@ public class Application {
     public void exitSystem(int exitStatus) {
         // disconnect from the booking service gracefully
         BookingService.getInstance().disconnect();
-
+        if (exitStatus == 0) {
+        	posWindow.saveSizeAndLocation();
+        }
         System.exit(exitStatus);
     }
     
