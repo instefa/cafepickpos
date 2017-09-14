@@ -67,7 +67,7 @@ import ru.instefa.cafepickpos.util.NumberUtil;
 import ru.instefa.cafepickpos.util.POSUtil;
 import ru.instefa.cafepickpos.exceptions.TicketAlreadyExistsException;
 
-public class SplitedTicketSelectionDialog extends POSDialog {
+public class SplittedTicketSelectionDialog extends POSDialog {
 	private List<Ticket> splitTickets;
 	private JPanel splitTicketsPanel;
 	private PosButton btnPay;
@@ -81,7 +81,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 	private OrderType orderType;
 	private boolean createNewTicket;
 
-	public SplitedTicketSelectionDialog(List<Ticket> tickets) {
+	public SplittedTicketSelectionDialog(List<Ticket> tickets) {
 		super(Application.getPosWindow(), POSConstants.TICKETS.toUpperCase());
 		this.splitTickets = tickets;
 		setLayout(new BorderLayout());
