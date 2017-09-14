@@ -45,6 +45,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
+
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import com.floreantpos.extension.ExtensionManager;
@@ -428,7 +429,7 @@ public class SwitchboardView extends ViewPanel implements ActionListener, ITicke
 			updateTicketList();
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(this, e.getLocalizedMessage());
+			POSMessageDialog.showError(this, e.getMessage());
 		} catch (Exception e) {
 			POSMessageDialog.showError(this, POSConstants.ERROR_MESSAGE, e);
 		}

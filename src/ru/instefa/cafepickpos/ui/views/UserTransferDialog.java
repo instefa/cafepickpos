@@ -98,11 +98,11 @@ public class UserTransferDialog extends POSDialog {
 			public void actionPerformed(ActionEvent e) {
 				User selectedUser = (User) list.getSelectedValue();
 				if (selectedUser == null) {
-					POSMessageDialog.showError(UserTransferDialog.this, "Please select user.");
+					POSMessageDialog.showError(UserTransferDialog.this, Messages.getString("UserTransferDialog.8"));
 					return;
 				}
 				if (!selectedUser.isClockedIn()) {
-					POSMessageDialog.showError(UserTransferDialog.this, "Selected user is not clocked in.");
+					POSMessageDialog.showError(UserTransferDialog.this, Messages.getString("UserTransferDialog.9"));
 					return;
 				}
 				List<Ticket> tickets = view.getTickets();

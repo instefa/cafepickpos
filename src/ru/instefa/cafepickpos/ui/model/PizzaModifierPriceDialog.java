@@ -132,7 +132,7 @@ public class PizzaModifierPriceDialog extends POSDialog {
 		MenuItemSize selectedSize = (MenuItemSize) cbSize.getSelectedItem();
 
 		if (selectedSize == null) {
-			POSMessageDialog.showError(this, Messages.getString("Please Select Size"));
+			POSMessageDialog.showError(this, Messages.getString("PizzaItemPriceDialog.0"));
 			return false;
 		}
 

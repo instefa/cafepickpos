@@ -31,6 +31,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.bo.actions.DataImportAction;
 import ru.instefa.cafepickpos.config.TerminalConfig;
@@ -385,7 +386,7 @@ public class DatabaseUtil {
 			Multiplier multiplier = new Multiplier("Regular");
 			multiplier.setRate(0.0);
 			multiplier.setSortOrder(0);
-			multiplier.setTicketPrefix("");
+			multiplier.setTicketPrefix(Messages.getString("Multiplier.0"));
 			multiplier.setDefaultMultiplier(true);
 			multiplier.setMain(true);
 			MultiplierDAO.getInstance().save(multiplier);
@@ -473,9 +474,7 @@ public class DatabaseUtil {
 
 	public static Configuration initialize() throws DatabaseConnectionException {
 		try {
-
 			return _RootDAO.reInitialize();
-
 		} catch (Exception e) {
 			logger.error(e);
 			throw new DatabaseConnectionException(e);

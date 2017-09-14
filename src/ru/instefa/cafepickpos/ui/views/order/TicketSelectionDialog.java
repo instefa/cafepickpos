@@ -95,7 +95,7 @@ public class TicketSelectionDialog extends OkCancelOptionDialog {
 				btnTicket.setPreferredSize(size);
 			}
 		} catch (PosException e) {
-			POSMessageDialog.showError(TicketSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(TicketSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 
@@ -109,7 +109,7 @@ public class TicketSelectionDialog extends OkCancelOptionDialog {
 			}
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(TicketSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(TicketSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 
