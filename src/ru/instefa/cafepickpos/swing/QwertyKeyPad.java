@@ -119,7 +119,7 @@ public class QwertyKeyPad extends JXCollapsiblePane implements ActionListener, C
 
 		JPanel eastPanel = new JPanel(new GridLayout(0, 1, 2, 2));
 		PosButton button = new PosButton();
-		button.setText(Messages.getString("QwertyKeyPad.1")); //$NON-NLS-1$
+		button.setText(Messages.getString("QwertyKeyPad.0")); //$NON-NLS-1$
 		button.setFocusable(false);
 		button.addActionListener(this);
 		eastPanel.add(button);

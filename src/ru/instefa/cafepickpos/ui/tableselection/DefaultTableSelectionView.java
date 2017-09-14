@@ -70,7 +70,7 @@ import ru.instefa.cafepickpos.ui.dialog.POSDialog;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 import ru.instefa.cafepickpos.ui.views.order.OrderView;
 import ru.instefa.cafepickpos.ui.views.order.RootView;
-import ru.instefa.cafepickpos.ui.views.payment.SplitedTicketSelectionDialog;
+import ru.instefa.cafepickpos.ui.views.payment.SplittedTicketSelectionDialog;
 import ru.instefa.cafepickpos.exceptions.TicketAlreadyExistsException;
 import com.jidesoft.swing.JideScrollPane;
 
@@ -342,7 +342,7 @@ public class DefaultTableSelectionView extends TableSelector implements ActionLi
 			splitTickets.add(ticket);
 		}
 		String action = POSConstants.EDIT;
-		SplitedTicketSelectionDialog posDialog = new SplitedTicketSelectionDialog(splitTickets);
+		SplittedTicketSelectionDialog posDialog = new SplittedTicketSelectionDialog(splitTickets);
 		List<ShopTable> selectedTables = getSelectedTables();
 		if (selectedTables.isEmpty()) {
 			selectedTables.add(table);

@@ -26,6 +26,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import ru.instefa.cafepickpos.Messages;
+import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.bo.ui.BOMessageDialog;
 import ru.instefa.cafepickpos.model.Customer;
 import ru.instefa.cafepickpos.model.dao.CustomerDAO;
@@ -50,21 +52,21 @@ public class CustomerExplorer extends TransparentPanel {
 		customerList = dao.findAll();
 
 		tableModel = new BeanTableModel<Customer>(Customer.class);
-		tableModel.addColumn("ID", "autoId"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("NAME", "name"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("LOYALTY", "loyaltyNo"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("TELEPHONE", "telephoneNo"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("EMAIL", "email"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("DOB", "dob"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("SSN", "ssn"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("ADDRESS", "address"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("CITY", "city"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("STATE", "state"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("ZIP", "zipCode"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("COUNTRY", "country"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("CREDIT LIMIT", "creditLimit"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("CREDIT SPENT", "creditSpent"); //$NON-NLS-1$ //$NON-NLS-2$
-		tableModel.addColumn("NOTE", "note"); //$NON-NLS-1$ //$NON-NLS-2$
+		tableModel.addColumn(POSConstants.ID, "autoId");
+		tableModel.addColumn(POSConstants.NAME, "name");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.0"), "loyaltyNo");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.0"), "telephoneNo");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.1"), "email");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.2"), "dob");
+		tableModel.addColumn(Messages.getString("CustomerForm.22"), "ssn");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.3"), "address");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.4"), "city");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.5"), "state");
+		tableModel.addColumn(Messages.getString("CustomerListTableModel.10"), "zipCode");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.2"), "country");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.3"), "creditLimit");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.4"), "creditSpent");
+		tableModel.addColumn(Messages.getString("CustomerExplorer.5"), "note");
 		tableModel.addRows(customerList);
 
 		table = new JTable(tableModel);

@@ -430,7 +430,7 @@ public class SwitchboardView extends ViewPanel implements ActionListener, ITicke
 			updateTicketList();
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(this, e.getLocalizedMessage());
+			POSMessageDialog.showError(this, e.getMessage());
 		} catch (Exception e) {
 			POSMessageDialog.showError(this, POSConstants.ERROR_MESSAGE, e);
 		}

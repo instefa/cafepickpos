@@ -137,10 +137,10 @@ public class KitchenDisplayView extends ViewPanel implements ActionListener {
 		Dimension size = PosUIManager.getSize(60, 40);
 
 		Font filterFont = getFont().deriveFont(Font.BOLD, 12f);
-		lblFilter = new JLabel(Messages.getString("KitchenDisplayView.3")); //$NON-NLS-1$
+		/*lblFilter = new JLabel(Messages.getString("KitchenDisplayView.3"));
 		lblFilter.setForeground(new Color(49, 106, 196));
 		lblFilter.setFont(filterFont);
-		topPanel.add(lblFilter, "gapleft 15!");//$NON-NLS-1$
+		topPanel.add(lblFilter, "gapleft 15!");*/
 		topPanel.add(btnFilter, "w " + size.width + "!,h " + size.height + "!"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		topPanel.setBackground(Color.white);
 

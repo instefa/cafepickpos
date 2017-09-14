@@ -31,7 +31,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
-
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.config.TerminalConfig;
 import ru.instefa.cafepickpos.main.Application;
@@ -72,7 +72,7 @@ public class ModifierSelectionDialog extends POSDialog implements ModifierGroupS
 	}
 
 	private void initComponents() {
-		setTitle("MODIFIERS");
+		setTitle(POSConstants.MODIFIERS);
 
 		setLayout(new java.awt.BorderLayout(10, 10));
 
@@ -103,7 +103,7 @@ public class ModifierSelectionDialog extends POSDialog implements ModifierGroupS
 	public void createButtonPanel() {
 		Dimension preferredButtonSize = new Dimension(100, TerminalConfig.getTouchScreenButtonHeight());
 
-		btnSave = new PosButton("DONE");
+		btnSave = new PosButton(POSConstants.SAVE_BUTTON_TEXT);
 		btnSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				doFinishModifierSelection();
@@ -186,7 +186,8 @@ public class ModifierSelectionDialog extends POSDialog implements ModifierGroupS
 		}
 
 		if (numModifiers >= maxQuantity) {
-			POSMessageDialog.showError("You have added maximum number of allowed modifiers from group " + modifier.getModifierGroup().getDisplayName());
+			POSMessageDialog.showError(Messages.getString("ModifierSelectionDialog.0") + " " +
+					modifier.getModifierGroup().getDisplayName());
 			//			return;
 			//			if (Application.getInstance().getRestaurant().isAllowModifierMaxExceed()) {
 			//				ticketItem.addAddOn(modifier);
@@ -270,7 +271,8 @@ public class ModifierSelectionDialog extends POSDialog implements ModifierGroupS
 	private void showModifierSelectionMessage(MenuItemModifierGroup menuItemModifierGroup) {
 		String displayName = menuItemModifierGroup.getModifierGroup().getDisplayName();
 		int minQuantity = menuItemModifierGroup.getMinQuantity();
-		POSMessageDialog.showError("You must select at least " + minQuantity + " modifiers from group " + displayName);
+		POSMessageDialog.showError(Messages.getString("ModifierSelectionDialog.1") + " " + minQuantity +
+			" " + Messages.getString("ModifierSelectionDialog.2") + " " + displayName);
 	}
 
 	@Override
@@ -292,7 +294,8 @@ public class ModifierSelectionDialog extends POSDialog implements ModifierGroupS
 				MenuItemModifierGroup ticketItemModifierGroup = (MenuItemModifierGroup) iterator.next();
 				if (!ticketItem.requiredModifiersAdded(ticketItemModifierGroup)) {
 					modifierGroupSelected(ticketItemModifierGroup.getModifierGroup());
-					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(), "Please select minimum quantity of each group!");
+					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(),
+						Messages.getString("ModifierSelectionDialog.3"));
 					return;
 				}
 				//				if (!ticketItemModifiers.isEmpty()) {
