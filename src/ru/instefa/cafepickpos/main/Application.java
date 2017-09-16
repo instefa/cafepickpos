@@ -310,7 +310,7 @@ public class Application {
 				terminal = new Terminal();
 				terminal.setId(terminalId);
 				terminal.setTerminalKey(terminalKey);
-				terminal.setName(String.valueOf(POSConstants.TERMINAL_LABEL + " " + terminalId)); //$NON-NLS-1$
+				terminal.setName(String.valueOf(terminalId)); //$NON-NLS-1$
 				TerminalDAO.getInstance().saveOrUpdate(terminal);
 			}
 			else if (StringUtils.isEmpty(terminal.getTerminalKey())) {

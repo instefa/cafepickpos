@@ -663,19 +663,20 @@ public class SwitchboardView extends ViewPanel implements ActionListener, ITicke
 
 	//	private PosButton btnBarTab = new PosButton(POSConstants.BAR_TAB_BUTTON_TEXT);
 
-	private PosButton btnEditTicket = new PosButton(POSConstants.EDIT_TICKET_BUTTON_TEXT);
-	private PosButton btnGroupSettle = new PosButton(POSConstants.GROUP_SETTLE_BUTTON_TEXT);
+	private PosButton btnEditTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.EDIT_TICKET_BUTTON_TEXT));
+	private PosButton btnGroupSettle = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.GROUP_SETTLE_BUTTON_TEXT));
 
-	private PosButton btnOrderInfo = new PosButton(POSConstants.ORDER_INFO_BUTTON_TEXT);
-	private PosButton btnReopenTicket = new PosButton(POSConstants.REOPEN_TICKET_BUTTON_TEXT);
-	private PosButton btnSettleTicket = new PosButton(POSConstants.SETTLE_TICKET_BUTTON_TEXT);
-	private PosButton btnSplitTicket = new PosButton(POSConstants.SPLIT_TICKET_BUTTON_TEXT);
+	private PosButton btnOrderInfo = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.ORDER_INFO_BUTTON_TEXT));
+	private PosButton btnReopenTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.REOPEN_TICKET_BUTTON_TEXT));
+	private PosButton btnSettleTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.SETTLE_TICKET_BUTTON_TEXT));
+	private PosButton btnSplitTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.SPLIT_TICKET_BUTTON_TEXT));
 
-	private PosButton btnVoidTicket = new PosButton(POSConstants.VOID_TICKET_BUTTON_TEXT);
-	private PosButton btnRefundTicket = new PosButton(POSConstants.REFUND_BUTTON_TEXT, new RefundAction(this));
+	private PosButton btnVoidTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.VOID_TICKET_BUTTON_TEXT));
+	private PosButton btnRefundTicket = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.REFUND_BUTTON_TEXT),
+			new RefundAction(this));
 
-	private PosButton btnAssignDriver = new PosButton(POSConstants.ASSIGN_DRIVER_BUTTON_TEXT);
-	private PosButton btnCloseOrder = new PosButton(POSConstants.CLOSE_ORDER_BUTTON_TEXT);
+	private PosButton btnAssignDriver = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.ASSIGN_DRIVER_BUTTON_TEXT));
+	private PosButton btnCloseOrder = new PosButton(PosGuiUtil.getCenteredMultilineHtml(POSConstants.CLOSE_ORDER_BUTTON_TEXT));
 	//private PosBlinkButton btnRefreshTicketList = new PosBlinkButton(Messages.getString(Messages.getString("SwitchboardView.21"))); //NON-NLS-1$ //$NON-NLS-1$
 
 	private ru.instefa.cafepickpos.ui.TicketListView ticketList = new ru.instefa.cafepickpos.ui.TicketListView();

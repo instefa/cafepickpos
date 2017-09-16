@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.model.Currency;
 import ru.instefa.cafepickpos.model.dao.CurrencyDAO;
 
@@ -73,7 +74,7 @@ public class CurrencyUtil {
 			currencyName = mainCurrency.getName();
 		}
 		else {
-			currencyName = "USD"; //$NON-NLS-1$
+			currencyName = Messages.getString("DatabaseUtil.18"); //$NON-NLS-1$
 		}
 		return currencyName;
 	}
@@ -84,7 +85,7 @@ public class CurrencyUtil {
 			currencySymbol = mainCurrency.getSymbol();
 		}
 		else {
-			currencySymbol = "$"; //$NON-NLS-1$
+			currencySymbol = Messages.getString("DatabaseUtil.19"); //$NON-NLS-1$
 		}
 		return currencySymbol;
 	}
