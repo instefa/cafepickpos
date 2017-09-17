@@ -190,6 +190,10 @@ public class Application {
 		} catch (DatabaseConnectionException e) {
 			PosLog.error(getClass(), e.getMessage());
 			
+			// do not leave configuration dialog orphan
+			posWindow.setVisibleWelcomeHeader(false);
+			posWindow.setVisible(true);
+			
 			String msg = Messages.getString("Application.0");
 			if (AppConfig.getDatabaseProviderName().equalsIgnoreCase(Database.DERBY_SINGLE.getProviderName())) {
 				msg = Messages.getString("Application.40");
@@ -199,6 +203,9 @@ public class Application {
 				Messages.getString("Application.51"), JOptionPane.YES_NO_OPTION);
 			if (option == JOptionPane.YES_OPTION) {
 				DatabaseConfigurationDialog.show(Application.getPosWindow());
+			} else {
+				// proceed with the single viable option - close the application
+				exitSystem(0);
 			}
 		} catch (Exception e) {
 			POSMessageDialog.showError(getPosWindow(), e.getMessage());

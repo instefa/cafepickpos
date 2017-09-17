@@ -23,6 +23,8 @@ import java.awt.HeadlessException;
 import java.awt.IllegalComponentStateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -158,9 +160,9 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 		btnExit.addActionListener(this);
 		btnUpdateDb.addActionListener(this);
 
-		databaseCombo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Database selectedDb = (Database) databaseCombo.getSelectedItem();
+		databaseCombo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+	    		Database selectedDb = (Database) databaseCombo.getSelectedItem();
 
 				if (selectedDb == Database.DERBY_SINGLE) {
 					setFieldsVisible(false);
@@ -175,7 +177,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 				}
 
 				tfServerPort.setText(databasePort);
-			}
+	      	}
 		});
 	}
 
@@ -208,8 +210,13 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 			String command = e.getActionCommand();
 
 			if (CANCEL.equalsIgnoreCase(command)) {
-				dispose();
-				return;
+				if (!Application.getInstance().isSystemInitialized()) {
+					// proceed with the single viable option - close the application
+					Application.getInstance().exitSystem(0);
+				} else {
+					dispose();
+					return;
+				}
 			}
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -285,11 +292,16 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 			else if (SAVE.equalsIgnoreCase(command)) {
 				if (connectionSuccess) {
 					Application.getInstance().initializeSystem();
+				} else if (!Application.getInstance().isSystemInitialized()) {
+					// proceed with the single viable option - close the application
+					Application.getInstance().exitSystem(0);
 				}
 				dispose();
 			}
 		} catch (IllegalComponentStateException ex) {
-			// TODO: refactor dialog to avoid the possibility of this error
+			// TODO: refactor dialog to avoid the possibility of this error,
+			// databaseCombo's ActionListener has been replaced with an ItemListener
+			// as a workaround, further testing and monitoring are necessary.
 			POSMessageDialog.showMessage(this, Messages.getString("DatabaseConfigurationDialog.38"));
 		} finally {
 			setCursor(Cursor.getDefaultCursor());
