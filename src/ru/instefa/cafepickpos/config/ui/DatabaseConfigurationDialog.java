@@ -218,11 +218,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 					return;
 				}
 			}
-
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-			Application.getInstance().setSystemInitialized(false);
-
+			
 			if (TEST.equalsIgnoreCase(command)) {
 				if (checkConnection()) {
 					connectionSuccess = true;
@@ -240,8 +236,9 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 				}
 
 				if (isAuthorizedToPerformDbChange()) {
-
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					
+					Application.getInstance().setSystemInitialized(false);
 	
 					if (updateDatabase()) {
 						connectionSuccess = true;
@@ -270,6 +267,8 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 				}
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				
+				Application.getInstance().setSystemInitialized(false);
 
 				if (createDatabase(generateSampleData)) {
 					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this,
@@ -296,6 +295,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 					// proceed with the single viable option - close the application
 					Application.getInstance().exitSystem(0);
 				}
+				Application.getInstance().setSystemInitialized(false);
 				dispose();
 			}
 		} catch (IllegalComponentStateException ex) {
