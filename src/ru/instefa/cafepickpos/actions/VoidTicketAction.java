@@ -32,13 +32,14 @@ import ru.instefa.cafepickpos.ui.dialog.NumberSelectionDialog2;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 import ru.instefa.cafepickpos.ui.dialog.VoidTicketDialog;
 import ru.instefa.cafepickpos.util.POSUtil;
+import ru.instefa.cafepickpos.util.PosGuiUtil;
 
 public class VoidTicketAction extends PosAction {
 
 	private final ITicketList ticketList;
 
 	public VoidTicketAction(ITicketList ticketList) {
-		super(POSConstants.VOID_TICKET_BUTTON_TEXT, UserPermission.VOID_TICKET); //$NON-NLS-1$
+		super(PosGuiUtil.getCenteredMultilineHtml(POSConstants.VOID_TICKET_BUTTON_TEXT), UserPermission.VOID_TICKET); //$NON-NLS-1$
 		this.ticketList = ticketList;
 	}
 

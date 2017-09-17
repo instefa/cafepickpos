@@ -437,7 +437,7 @@ public class SetUpWindow extends JFrame implements ActionListener {
 				}
 			}
 		} catch (Exception e2) {
-			PosLog.error(getClass(), e2);
+			PosLog.error(getClass(), e2.getMessage());
 			POSMessageDialog.showMessage(this, e2.getMessage());
 		} finally {
 			setCursor(Cursor.getDefaultCursor());
@@ -564,7 +564,7 @@ public class SetUpWindow extends JFrame implements ActionListener {
 
 	public static SetUpWindow open() {
 		SetUpWindow window = new SetUpWindow();
-		window.setTitle(Messages.getString("DatabaseConfigurationDialog.38")); //$NON-NLS-1$
+		window.setTitle(Messages.getString("DatabaseConfigurationDialog.37")); //$NON-NLS-1$
 		window.pack();
 		window.setVisible(true);
 

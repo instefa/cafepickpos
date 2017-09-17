@@ -63,14 +63,15 @@ import ru.instefa.cafepickpos.ui.views.order.RootView;
 import ru.instefa.cafepickpos.util.PosGuiUtil;
 
 public class HeaderPanel extends JPanel {
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtil.getDatePattern("MMM dd yyyy, hh:mm:ss aaa")); //$NON-NLS-1$
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtil.getDatePattern("MMM dd, hh:mm:ss aaa")); //$NON-NLS-1$
 
+	private JLabel terminalLabel;
 	private JLabel statusLabel;
 
 	private Timer clockTimer = new Timer(1000, new ClockTimerHandler());
 	private Timer autoLogoffTimer;
 
-	private String userString = POSConstants.USER; //$NON-NLS-1$
+	private String userString = Messages.getString("HeaderPanel.1"); //$NON-NLS-1$
 	private String terminalString = POSConstants.TERMINAL_LABEL; //$NON-NLS-1$
 
 	private JLabel logoffLabel;
@@ -110,14 +111,20 @@ public class HeaderPanel extends JPanel {
 
 		add(getHeaderLogo(), BorderLayout.WEST);
 
-		TransparentPanel statusPanel = new TransparentPanel(new MigLayout("hidemode 3, fill, ins 0, gap 0")); //$NON-NLS-1$
+		TransparentPanel statusPanel = new TransparentPanel(new MigLayout("hidemode 3, fill, ins 0, gap 0"));
+		terminalLabel = new JLabel();
+		Font font = terminalLabel.getFont().deriveFont(Font.BOLD);
+		terminalLabel.setFont(font);
+		terminalLabel.setHorizontalAlignment(JLabel.CENTER);
+		terminalLabel.setVerticalAlignment(JLabel.BOTTOM);
+		statusPanel.add(terminalLabel, "grow");
 		statusLabel = new JLabel();
-		statusLabel.setFont(statusLabel.getFont().deriveFont(Font.BOLD));
+		statusLabel.setFont(font);
 		statusLabel.setHorizontalAlignment(JLabel.CENTER);
 		statusLabel.setVerticalAlignment(JLabel.BOTTOM);
-		statusPanel.add(statusLabel, "grow"); //$NON-NLS-1$
+		statusPanel.add(statusLabel, "newline, growx"); //$NON-NLS-1$
 		logoffLabel = new JLabel();
-		logoffLabel.setFont(statusLabel.getFont().deriveFont(Font.BOLD));
+		logoffLabel.setFont(font);
 		logoffLabel.setHorizontalAlignment(JLabel.CENTER);
 		logoffLabel.setVerticalAlignment(JLabel.TOP);
 		statusPanel.add(logoffLabel, "newline, growx"); //$NON-NLS-1$
@@ -193,12 +200,11 @@ public class HeaderPanel extends JPanel {
 
 	private void showHeader() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(userString + ": " + Application.getCurrentUser().getFirstName()); //$NON-NLS-1$
-		sb.append(", "); //$NON-NLS-1$
-		sb.append(terminalString + ": " + Application.getInstance().getTerminal().getName()); //$NON-NLS-1$
+		sb.append(userString + Application.getCurrentUser().getFirstName());
 		sb.append(", "); //$NON-NLS-1$
 		sb.append(dateFormat.format(Calendar.getInstance().getTime()));
 		statusLabel.setText(sb.toString());
+		terminalLabel.setText(terminalString + ": " + Application.getInstance().getTerminal().getName());
 	}
 
 	private void updateView() {
@@ -282,7 +288,7 @@ public class HeaderPanel extends JPanel {
 			int min = countDown / 60;
 			int sec = countDown % 60;
 
-			logoffLabel.setText(Messages.getString("HeaderPanel.0") + min + ":" + sec); //$NON-NLS-1$ //$NON-NLS-2$
+			logoffLabel.setText(Messages.getString("HeaderPanel.0") + " " + min + ":" + sec);
 
 			if (countDown == 0) {
 				//Application.getInstance().doLogout();
