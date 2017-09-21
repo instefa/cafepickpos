@@ -102,6 +102,14 @@ public class BookingView extends ViewPanel {
 		} catch (Exception e) {
 			POSMessageDialog.showError(this, Messages.getString("BookingView.10"), e);
 		} finally {
+			// no row selected - no action available
+			confirmBtn.setEnabled(false);
+	        executeBtn.setEnabled(false);
+	        finishBtn.setEnabled(false);
+	        cancelBtn.setEnabled(false);
+	        deleteBtn.setEnabled(false);
+	        registerBtn.setEnabled(false);
+	        
 			Application.getPosWindow().setGlassPaneVisible(false);
 		}
 	}

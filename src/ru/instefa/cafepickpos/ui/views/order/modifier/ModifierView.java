@@ -41,7 +41,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import net.miginfocom.swing.MigLayout;
-
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.exceptions.PosException;
 import ru.instefa.cafepickpos.model.MenuModifier;
@@ -68,7 +68,7 @@ public class ModifierView extends SelectionView {
 	private MenuModifierGroup modifierGroup;
 
 	private PosButton btnClear = new PosButton(POSConstants.CLEAR);
-	private PosButton btnDone = new PosButton(POSConstants.GROUP.toUpperCase() + " " + "DONE");
+	private PosButton btnDone = new PosButton(Messages.getString("ModifierView.2"));
 
 	private HashMap<String, ModifierButton> buttonMap = new HashMap<String, ModifierButton>();
 
@@ -172,7 +172,8 @@ public class ModifierView extends SelectionView {
 		String displayName = modifierGroup.getDisplayName();
 		int minQuantity = modifierGroup.getMenuItemModifierGroup().getMinQuantity();
 		maxQuantity = modifierGroup.getMenuItemModifierGroup().getMaxQuantity();
-		setTitle(displayName + ", Min: " + minQuantity + ", Max: " + maxQuantity);
+		setTitle(displayName + ", " + Messages.getString("ModifierView.0") + ": "
+				+ minQuantity + ", " + Messages.getString("ModifierView.1") + ": " + maxQuantity);
 	}
 
 	@Override
@@ -268,7 +269,7 @@ public class ModifierView extends SelectionView {
 
 		public MultiplierButton(Multiplier multiplier) {
 			this.multiplier = multiplier;
-			setText(multiplier.getName());
+			setText(multiplier.getTicketPrefix());
 			Integer buttonColor = multiplier.getButtonColor();
 			if (buttonColor != null) {
 				setBackground(new Color(buttonColor));

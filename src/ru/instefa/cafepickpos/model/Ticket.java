@@ -738,13 +738,13 @@ public class Ticket extends BaseTicket {
 
 	public void setCustomer(Customer customer) {
 		if (customer != null) {
-			addProperty(Ticket.CUSTOMER_ID, String.valueOf(customer.getAutoId()));
+			int customerId = customer.getAutoId();
+			addProperty(Ticket.CUSTOMER_ID, String.valueOf(customerId));
 			addProperty(Ticket.CUSTOMER_NAME, customer.getFirstName());
 			addProperty(Ticket.CUSTOMER_MOBILE, customer.getMobileNo());
 			addProperty(Ticket.CUSTOMER_ZIP_CODE, customer.getZipCode());
-		}
-		if (customer != null) {
-			setCustomerId(customer.getAutoId());
+
+			setCustomerId(customerId);
 		}
 	}
 
@@ -755,6 +755,22 @@ public class Ticket extends BaseTicket {
 		removeProperty(CUSTOMER_ZIP_CODE);
 	}
 
+	public String getCustomerName() {
+		String customerName = getProperty(Ticket.CUSTOMER_NAME);
+
+		if (customerName != null && !customerName.equals("")) {
+			return customerName;
+		}
+
+		String customerMobile = getProperty(Ticket.CUSTOMER_MOBILE);
+
+		if (customerMobile != null) {
+			return customerMobile;
+		}
+
+		return Messages.getString("TicketListView.6");
+	}
+	
 	public String getSortOrder() {
 		if (sortOrder == null) {
 			return ""; //$NON-NLS-1$

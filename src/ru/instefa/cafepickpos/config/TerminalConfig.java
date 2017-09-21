@@ -143,7 +143,7 @@ public class TerminalConfig {
 	}
 	
 	public static boolean isUse24HourClockMode() {
-		return CONFIG.getBoolean(USE24HOURCLOCK_MODE, false);
+		return CONFIG.getBoolean(USE24HOURCLOCK_MODE, true);
 	}
 
 	public static void setUse24HourClockMode(boolean iso8601) {

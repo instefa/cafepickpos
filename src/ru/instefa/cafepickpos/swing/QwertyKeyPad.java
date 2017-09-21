@@ -96,7 +96,7 @@ public class QwertyKeyPad extends JXCollapsiblePane implements ActionListener, C
 		// use ISO 639 old style locale codes as keys
 		layouts.put("en", enLayout);
 		// cyrrilic layout (russian)
-		if (localeCode=="ru") {
+		if (localeCode.equals(new Locale("ru").getLanguage())) {
 			String[] ruLayout = new String[] {
 				"1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 				"а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и",
@@ -119,7 +119,7 @@ public class QwertyKeyPad extends JXCollapsiblePane implements ActionListener, C
 
 		JPanel eastPanel = new JPanel(new GridLayout(0, 1, 2, 2));
 		PosButton button = new PosButton();
-		button.setText(Messages.getString("QwertyKeyPad.1")); //$NON-NLS-1$
+		button.setText(Messages.getString("QwertyKeyPad.0")); //$NON-NLS-1$
 		button.setFocusable(false);
 		button.addActionListener(this);
 		eastPanel.add(button);

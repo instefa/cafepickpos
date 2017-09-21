@@ -40,6 +40,7 @@ import ru.instefa.cafepickpos.model.MenuItem;
 import ru.instefa.cafepickpos.model.MenuItemModifierGroup;
 import ru.instefa.cafepickpos.model.MenuModifier;
 import ru.instefa.cafepickpos.model.MenuModifierGroup;
+import ru.instefa.cafepickpos.model.ModifierMultiplierPrice;
 import ru.instefa.cafepickpos.model.Tax;
 import ru.instefa.cafepickpos.model.TaxGroup;
 import ru.instefa.cafepickpos.model.dao.MenuCategoryDAO;
@@ -48,6 +49,7 @@ import ru.instefa.cafepickpos.model.dao.MenuItemDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemModifierGroupDAO;
 import ru.instefa.cafepickpos.model.dao.MenuModifierDAO;
 import ru.instefa.cafepickpos.model.dao.MenuModifierGroupDAO;
+import ru.instefa.cafepickpos.model.dao.ModifierMultiplierPriceDAO;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 import ru.instefa.cafepickpos.util.datamigrate.Elements;
 
@@ -153,19 +155,38 @@ public class DataImportAction extends AbstractAction {
 					objectMap.put(menuModifier.getUniqueId(), menuModifier);
 					menuModifier.setId(null);
 
+					// restoring groups
 					MenuModifierGroup menuModifierGroup = menuModifier.getModifierGroup();
 					if (menuModifierGroup != null) {
 						menuModifierGroup = (MenuModifierGroup) objectMap.get(menuModifierGroup.getUniqueId());
 						menuModifier.setModifierGroup(menuModifierGroup);
 					}
 
+					// restoring taxes
 					Tax tax = menuModifier.getTax();
 					if (tax != null) {
 						tax = (Tax) objectMap.get(tax.getUniqueId());
 						menuModifier.setTax(tax);
 					}
+					
+					// multipliers prices to save after menu modifiers will be created
+					List<ModifierMultiplierPrice> multiplierPrices = menuModifier.getMultiplierPriceList();
+					// modifiers should exist in the database to link them with the multipliers prices
+					menuModifier.setMultiplierPriceList(null);
 
+					// creating modifiers
 					MenuModifierDAO.getInstance().saveOrUpdate(menuModifier);
+					
+					// now we can create multipliers prices and their relations with menu modifiers
+					if (multiplierPrices != null) {
+						for (ModifierMultiplierPrice price : multiplierPrices) {
+							if (price.getPrice() != null) {
+								price.setId(null);
+								price.setModifier(menuModifier);
+								ModifierMultiplierPriceDAO.getInstance().saveOrUpdate(price);
+							}
+						}
+					}
 				}
 			}
 

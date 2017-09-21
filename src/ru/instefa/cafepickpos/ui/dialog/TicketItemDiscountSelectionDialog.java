@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 
+import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.exceptions.PosException;
 import ru.instefa.cafepickpos.model.Discount;
@@ -102,14 +103,14 @@ public class TicketItemDiscountSelectionDialog extends OkCancelOptionDialog {
 			buttonsPanel.revalidate();
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(TicketItemDiscountSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(TicketItemDiscountSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 
 	@Override
 	public void doOk() {
 		if (addedTicketItems.isEmpty()) {
-			POSMessageDialog.showMessage("Please select one or more item.");
+			POSMessageDialog.showMessage(Messages.getString("TicketItemDiscountSelectionDialog.0"));
 			return;
 		}
 		setCanceled(false);

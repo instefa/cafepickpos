@@ -69,6 +69,7 @@ import ru.instefa.cafepickpos.swing.PosButton;
 import ru.instefa.cafepickpos.swing.PosUIManager;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
 import ru.instefa.cafepickpos.util.DatabaseUtil;
+import ru.instefa.cafepickpos.util.POSUtil;
 
 public class SetUpWindow extends JFrame implements ActionListener {
 
@@ -384,7 +385,7 @@ public class SetUpWindow extends JFrame implements ActionListener {
 			}
 			saveConfig(selectedDb, providerName, databaseURL, databasePort, databaseName, user, pass, connectionString, hibernateDialect);
 			if (CREATE_SAMPLE_DATA.equals(command)) {
-				DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream("/cafepickpos-menu-items.xml")); //$NON-NLS-1$
+				DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream(POSUtil.getMenuFilename())); //$NON-NLS-1$
 			}
 			else if (CREATE_DATABASE.equals(command)) {
 				int i = JOptionPane.showConfirmDialog(this,
@@ -437,7 +438,7 @@ public class SetUpWindow extends JFrame implements ActionListener {
 				}
 			}
 		} catch (Exception e2) {
-			PosLog.error(getClass(), e2);
+			PosLog.error(getClass(), e2.getMessage());
 			POSMessageDialog.showMessage(this, e2.getMessage());
 		} finally {
 			setCursor(Cursor.getDefaultCursor());
@@ -564,7 +565,7 @@ public class SetUpWindow extends JFrame implements ActionListener {
 
 	public static SetUpWindow open() {
 		SetUpWindow window = new SetUpWindow();
-		window.setTitle(Messages.getString("DatabaseConfigurationDialog.38")); //$NON-NLS-1$
+		window.setTitle(Messages.getString("DatabaseConfigurationDialog.37")); //$NON-NLS-1$
 		window.pack();
 		window.setVisible(true);
 

@@ -35,10 +35,10 @@ public class CustomPaymentBrowserAction extends PosAction {
 
 		CustomPaymentBrowser explorer = null;
 		JTabbedPane tabbedPane = backOfficeWindow.getTabbedPane();
-		int index = tabbedPane.indexOfTab(Messages.getString("CustomPaymentBrowserAction.1")); //$NON-NLS-1$
+		int index = tabbedPane.indexOfTab(Messages.getString("CustomPaymentBrowserAction.0")); //$NON-NLS-1$
 		if (index == -1) {
 			explorer = new CustomPaymentBrowser();
-			tabbedPane.addTab(Messages.getString("CustomPaymentBrowserAction.2"), explorer); //$NON-NLS-1$
+			tabbedPane.addTab(Messages.getString("CustomPaymentBrowserAction.0"), explorer); //$NON-NLS-1$
 		}
 		else {
 			explorer = (CustomPaymentBrowser) tabbedPane.getComponentAt(index);

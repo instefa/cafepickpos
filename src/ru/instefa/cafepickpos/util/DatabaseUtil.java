@@ -17,9 +17,6 @@
  */
 package ru.instefa.cafepickpos.util;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +31,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
+import ru.instefa.cafepickpos.Messages;
+import ru.instefa.cafepickpos.POSConstants;
 import ru.instefa.cafepickpos.PosLog;
 import ru.instefa.cafepickpos.bo.actions.DataImportAction;
 import ru.instefa.cafepickpos.config.TerminalConfig;
@@ -56,7 +55,6 @@ import ru.instefa.cafepickpos.model.UserPermission;
 import ru.instefa.cafepickpos.model.UserType;
 import ru.instefa.cafepickpos.model.dao.CurrencyDAO;
 import ru.instefa.cafepickpos.model.dao.DiscountDAO;
-import ru.instefa.cafepickpos.model.dao.GenericDAO;
 import ru.instefa.cafepickpos.model.dao.MenuItemSizeDAO;
 import ru.instefa.cafepickpos.model.dao.MultiplierDAO;
 import ru.instefa.cafepickpos.model.dao.OrderTypeDAO;
@@ -105,41 +103,6 @@ public class DatabaseUtil {
 		}
 	}
 
-	public static void updateLegacyDatabase() {
-		try {
-			dropModifiedTimeColumn();
-		} catch (SQLException e) {
-			logger.error(e);
-		}
-	}
-
-	private static void dropModifiedTimeColumn() throws SQLException {
-		GenericDAO dao = new GenericDAO();
-		Session session = null;
-
-		try {
-			session = dao.createNewSession();
-			Connection connection = session.connection();
-			String[] tables = { "CUSTOMER", "GRATUITY", "INVENTORY_GROUP", "INVENTORY_ITEM", "INVENTORY_LOCATION", "INVENTORY_META_CODE",
-					"INVENTORY_TRANSACTION", "INVENTORY_TRANSACTION_TYPE", "INVENTORY_UNIT", "INVENTORY_VENDOR", "INVENTORY_WAREHOUSE", "KITCHEN_TICKET",
-					"KITCHEN_TICKET_ITEM", "MENUITEM_MODIFIERGROUP", "MENU_CATEGORY", "MENU_GROUP", "MENU_ITEM", "MENU_MODIFIER", "MENU_MODIFIER_GROUP",
-					"PURCHASE_ORDER", "TAX", "TERMINAL", "TICKET", "TICKETITEM_MODIFIERGROUP", "TICKET_ITEM", "TICKETITEM_DISCOUNT", "TRANSACTIONS", "USERS",
-					"ZIP_CODE_VS_DELIVERY_CHARGE" };
-
-			for (String table : tables) {
-				try {
-					Statement statement = connection.createStatement();
-					statement.execute("ALTER TABLE " + table + " DROP COLUMN MODIFIED_TIME");
-				} catch (Exception e) {
-					//logger.error(e);
-				}
-			}
-			connection.commit();
-		} finally {
-			dao.closeSession(session);
-		}
-	}
-
 	public static boolean createDatabase(String connectionString, String hibernateDialect, String hibernateConnectionDriverClass, String user, String password,
 			boolean exportSampleData) {
 		try {
@@ -161,13 +124,13 @@ public class DatabaseUtil {
 
 			Restaurant restaurant = new Restaurant();
 			restaurant.setId(Integer.valueOf(1));
-			restaurant.setName("Sample Restaurant");
-			restaurant.setAddressLine1("Somewhere");
-			restaurant.setTelephone("+0123456789");
+			restaurant.setName(Messages.getString("DatabaseUtil.0"));
+			restaurant.setAddressLine1(Messages.getString("DatabaseUtil.1"));
+			restaurant.setTelephone(Messages.getString("DatabaseUtil.2"));
 			RestaurantDAO.getInstance().saveOrUpdate(restaurant);
 
 			Tax tax = new Tax();
-			tax.setName("US");
+			tax.setName(Messages.getString("DatabaseUtil.3"));
 			tax.setRate(Double.valueOf(6));
 			TaxDAO.getInstance().saveOrUpdate(tax);
 
@@ -200,7 +163,7 @@ public class DatabaseUtil {
 			UserTypeDAO.getInstance().saveOrUpdate(cashier);
 
 			UserType server = new UserType();
-			server.setName("SR. CASHIER");
+			server.setName(Messages.getString("DatabaseUtil.4"));
 			server.setPermissions(new HashSet<UserPermission>(Arrays.asList(UserPermission.CREATE_TICKET, UserPermission.SETTLE_TICKET,
 					UserPermission.SPLIT_TICKET)));
 			//server.setTest(Arrays.asList(OrderType.BAR_TAB));
@@ -210,8 +173,8 @@ public class DatabaseUtil {
 			administratorUser.setUserId(123);
 			administratorUser.setSsn("123");
 			administratorUser.setPassword("1111");
-			administratorUser.setFirstName("Admin");
-			administratorUser.setLastName("System");
+			administratorUser.setFirstName(Messages.getString("DatabaseUtil.5"));
+			administratorUser.setLastName(Messages.getString("DatabaseUtil.6"));
 			administratorUser.setType(administrator);
 			administratorUser.setActive(true);
 
@@ -222,8 +185,8 @@ public class DatabaseUtil {
 			managerUser.setUserId(124);
 			managerUser.setSsn("124");
 			managerUser.setPassword("2222");
-			managerUser.setFirstName("Lisa");
-			managerUser.setLastName("Carol");
+			managerUser.setFirstName(Messages.getString("DatabaseUtil.7"));
+			managerUser.setLastName(Messages.getString("DatabaseUtil.8"));
 			managerUser.setType(manager);
 			managerUser.setActive(true);
 
@@ -233,8 +196,8 @@ public class DatabaseUtil {
 			cashierUser.setUserId(125);
 			cashierUser.setSsn("125");
 			cashierUser.setPassword("3333");
-			cashierUser.setFirstName("Janet");
-			cashierUser.setLastName("Ann");
+			cashierUser.setFirstName(Messages.getString("DatabaseUtil.9"));
+			cashierUser.setLastName(Messages.getString("DatabaseUtil.10"));
 			cashierUser.setType(cashier);
 			cashierUser.setActive(true);
 
@@ -244,8 +207,8 @@ public class DatabaseUtil {
 			serverUser.setUserId(126);
 			serverUser.setSsn("126");
 			serverUser.setPassword("7777");
-			serverUser.setFirstName("John");
-			serverUser.setLastName("Doe");
+			serverUser.setFirstName(Messages.getString("DatabaseUtil.11"));
+			serverUser.setLastName(Messages.getString("DatabaseUtil.12"));
 			serverUser.setType(server);
 			serverUser.setActive(true);
 
@@ -255,8 +218,8 @@ public class DatabaseUtil {
 			driverUser.setUserId(127);
 			driverUser.setSsn("127");
 			driverUser.setPassword("8888");
-			driverUser.setFirstName("Poll");
-			driverUser.setLastName("Brien");
+			driverUser.setFirstName(Messages.getString("DatabaseUtil.13"));
+			driverUser.setLastName(Messages.getString("DatabaseUtil.14"));
 			driverUser.setType(server);
 			driverUser.setDriver(true);
 			driverUser.setActive(true);
@@ -265,7 +228,7 @@ public class DatabaseUtil {
 
 			OrderTypeDAO orderTypeDAO = new OrderTypeDAO();
 			OrderType orderType = new OrderType();
-			orderType.setName("DINE IN");
+			orderType.setName(POSConstants.DINE_IN_BUTTON_TEXT);
 			orderType.setShowTableSelection(true);
 			orderType.setCloseOnPaid(true);
 			orderType.setEnabled(true);
@@ -274,7 +237,7 @@ public class DatabaseUtil {
 			orderTypeDAO.save(orderType);
 
 			orderType = new OrderType();
-			orderType.setName("TAKE OUT");
+			orderType.setName(POSConstants.TAKE_OUT_BUTTON_TEXT);
 			orderType.setShowTableSelection(false);
 			orderType.setCloseOnPaid(true);
 			orderType.setEnabled(true);
@@ -284,7 +247,7 @@ public class DatabaseUtil {
 			orderTypeDAO.save(orderType);
 
 			orderType = new OrderType();
-			orderType.setName("RETAIL");
+			orderType.setName(POSConstants.RETAIL_BUTTON_TEXT);
 			orderType.setShowTableSelection(false);
 			orderType.setCloseOnPaid(true);
 			orderType.setEnabled(true);
@@ -293,7 +256,7 @@ public class DatabaseUtil {
 			orderTypeDAO.save(orderType);
 
 			orderType = new OrderType();
-			orderType.setName("HOME DELIVERY");
+			orderType.setName(POSConstants.HOME_DELIVERY_BUTTON_TEXT);
 			orderType.setShowTableSelection(false);
 			orderType.setCloseOnPaid(false);
 			orderType.setEnabled(true);
@@ -306,7 +269,7 @@ public class DatabaseUtil {
 			DiscountDAO discountDao = new DiscountDAO();
 
 			Discount discount1 = new Discount();
-			discount1.setName("Buy 1 and get 1 free");
+			discount1.setName(Messages.getString("DatabaseUtil.15"));
 			discount1.setType(1);
 			discount1.setValue(100.0);
 			discount1.setAutoApply(false);
@@ -319,7 +282,7 @@ public class DatabaseUtil {
 			discountDao.saveOrUpdate(discount1);
 
 			Discount discount2 = new Discount();
-			discount2.setName("Buy 2 and get 1 free");
+			discount2.setName(Messages.getString("DatabaseUtil.16"));
 			discount2.setType(1);
 			discount2.setValue(100.0);
 			discount2.setAutoApply(true);
@@ -332,7 +295,7 @@ public class DatabaseUtil {
 			discountDao.saveOrUpdate(discount2);
 
 			Discount discount3 = new Discount();
-			discount3.setName("10% Off");
+			discount3.setName(Messages.getString("DatabaseUtil.17"));
 			discount3.setType(1);
 			discount3.setValue(10.0);
 			discount3.setAutoApply(false);
@@ -351,7 +314,7 @@ public class DatabaseUtil {
 			}
 			Terminal terminal = new Terminal();
 			terminal.setId(terminalId);
-			terminal.setName(String.valueOf(terminalId)); //$NON-NLS-1$
+			terminal.setName(String.valueOf(terminalId));
 
 			TerminalDAO.getInstance().saveOrUpdate(terminal);
 
@@ -359,71 +322,42 @@ public class DatabaseUtil {
 			cashDrawer.setTerminal(terminal);
 
 			Currency currency = new Currency();
-			currency.setName("USD");
-			currency.setCode("USD");
-			currency.setSymbol("$");
+			currency.setName(Messages.getString("DatabaseUtil.18"));
+			currency.setCode(Messages.getString("DatabaseUtil.31"));
+			currency.setSymbol(Messages.getString("DatabaseUtil.19"));
 			currency.setExchangeRate(1.0);
 			currency.setMain(true);
 			CurrencyDAO.getInstance().save(currency);
 
-			currency = new Currency();
-			currency.setName("EUR");
-			currency.setCode("EUR");
-			currency.setSymbol("E");
-			currency.setExchangeRate(0.8);
-			CurrencyDAO.getInstance().save(currency);
-
-			currency = new Currency();
-			currency.setName("BRL");
-			currency.setCode("BRL");
-			currency.setSymbol("B");
-			currency.setExchangeRate(3.47);
-			CurrencyDAO.getInstance().save(currency);
-
-			currency = new Currency();
-			currency.setName("ARS");
-			currency.setCode("ARS");
-			currency.setSymbol("P");
-			currency.setExchangeRate(13.89);
-			CurrencyDAO.getInstance().save(currency);
-
-			currency = new Currency();
-			currency.setName("PYG");
-			currency.setCode("PYG");
-			currency.setSymbol("P");
-			currency.setExchangeRate(5639.78);
-			currency.setDecimalPlaces(0);
-			CurrencyDAO.getInstance().save(currency);
-
 			MenuItemSize menuItemSize = new MenuItemSize();
-			menuItemSize.setName("SMALL");
+			menuItemSize.setName(Messages.getString("DatabaseUtil.20"));
 			menuItemSize.setSortOrder(0);
 			MenuItemSizeDAO.getInstance().save(menuItemSize);
 
 			menuItemSize = new MenuItemSize();
-			menuItemSize.setName("MEDIUM");
+			menuItemSize.setName(Messages.getString("DatabaseUtil.21"));
 			menuItemSize.setSortOrder(1);
 			MenuItemSizeDAO.getInstance().save(menuItemSize);
 
 			menuItemSize = new MenuItemSize();
-			menuItemSize.setName("LARGE");
+			menuItemSize.setName(Messages.getString("DatabaseUtil.22"));
 			menuItemSize.setSortOrder(2);
 			MenuItemSizeDAO.getInstance().save(menuItemSize);
 
 			PizzaCrust crust = new PizzaCrust();
-			crust.setName("PAN");
+			crust.setName(Messages.getString("DatabaseUtil.23"));
 			crust.setSortOrder(0);
 			PizzaCrustDAO.getInstance().save(crust);
 
 			crust = new PizzaCrust();
-			crust.setName("HAND TOSSED");
+			crust.setName(Messages.getString("DatabaseUtil.24"));
 			crust.setSortOrder(1);
 			PizzaCrustDAO.getInstance().save(crust);
 
 			Multiplier multiplier = new Multiplier("Regular");
 			multiplier.setRate(0.0);
 			multiplier.setSortOrder(0);
-			multiplier.setTicketPrefix("");
+			multiplier.setTicketPrefix(Messages.getString("Multiplier.0"));
 			multiplier.setDefaultMultiplier(true);
 			multiplier.setMain(true);
 			MultiplierDAO.getInstance().save(multiplier);
@@ -431,42 +365,42 @@ public class DatabaseUtil {
 			multiplier = new Multiplier("No");
 			multiplier.setRate(0.0);
 			multiplier.setSortOrder(1);
-			multiplier.setTicketPrefix("No");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.25"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
 			multiplier = new Multiplier("Half");
 			multiplier.setRate(50.0);
 			multiplier.setSortOrder(2);
-			multiplier.setTicketPrefix("Half");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.26"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
 			multiplier = new Multiplier("Quarter");
 			multiplier.setRate(25.0);
 			multiplier.setSortOrder(3);
-			multiplier.setTicketPrefix("Quarter");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.27"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
 			multiplier = new Multiplier("Extra");
 			multiplier.setRate(200.0);
 			multiplier.setSortOrder(4);
-			multiplier.setTicketPrefix("Extra");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.28"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
 			multiplier = new Multiplier("Triple");
 			multiplier.setRate(300.0);
 			multiplier.setSortOrder(5);
-			multiplier.setTicketPrefix("Triple");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.29"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
 			multiplier = new Multiplier("Sub");
 			multiplier.setRate(100.0);
 			multiplier.setSortOrder(6);
-			multiplier.setTicketPrefix("Sub");
+			multiplier.setTicketPrefix(Messages.getString("DatabaseUtil.30"));
 			multiplier.setDefaultMultiplier(false);
 			MultiplierDAO.getInstance().save(multiplier);
 
@@ -474,7 +408,7 @@ public class DatabaseUtil {
 				return true;
 			}
 
-			DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream("/cafepickpos-menu-items.xml"));
+			DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream(POSUtil.getMenuFilename()));
 
 			return true;
 		} catch (Exception e) {
@@ -511,9 +445,7 @@ public class DatabaseUtil {
 
 	public static Configuration initialize() throws DatabaseConnectionException {
 		try {
-
 			return _RootDAO.reInitialize();
-
 		} catch (Exception e) {
 			logger.error(e);
 			throw new DatabaseConnectionException(e);

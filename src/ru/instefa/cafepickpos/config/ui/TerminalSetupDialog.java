@@ -96,7 +96,7 @@ public class TerminalSetupDialog extends JDialog {
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "SaveAction"); //$NON-NLS-1$
-			putValue(SHORT_DESCRIPTION, Messages.getString("TerminalSetupDialog.10")); //$NON-NLS-1$
+			putValue(SHORT_DESCRIPTION, Messages.getString("TerminalSetupDialog.4")); //$NON-NLS-1$
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(terminalConfigurationView.canSave()) {
@@ -107,7 +107,7 @@ public class TerminalSetupDialog extends JDialog {
 	private class SwingAction_1 extends AbstractAction {
 		public SwingAction_1() {
 			putValue(NAME, "CloseAction"); //$NON-NLS-1$
-			putValue(SHORT_DESCRIPTION, Messages.getString("TerminalSetupDialog.12")); //$NON-NLS-1$
+			putValue(SHORT_DESCRIPTION, Messages.getString("TerminalSetupDialog.6")); //$NON-NLS-1$
 		}
 		public void actionPerformed(ActionEvent e) {
 			dispose();

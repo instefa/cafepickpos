@@ -130,7 +130,7 @@ public class PrinterTypeSelectionDialog extends POSDialog implements ActionListe
 			group.add(btnKitchenDisplayPrinter);
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(PrinterTypeSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(PrinterTypeSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 

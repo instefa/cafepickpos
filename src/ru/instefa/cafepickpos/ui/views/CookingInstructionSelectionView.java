@@ -105,7 +105,7 @@ public class CookingInstructionSelectionView extends OkCancelOptionDialog {
 		});
 
 		PosButton btnSave = new PosButton(IconFactory.getIcon("save.png"));
-		btnSave.setText(POSConstants.SAVE.toUpperCase());
+		//btnSave.setText(POSConstants.SAVE.toUpperCase());
 		btnSave.addActionListener(new ActionListener() {
 
 			@Override

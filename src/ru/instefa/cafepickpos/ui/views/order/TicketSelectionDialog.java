@@ -95,7 +95,7 @@ public class TicketSelectionDialog extends OkCancelOptionDialog {
 				btnTicket.setPreferredSize(size);
 			}
 		} catch (PosException e) {
-			POSMessageDialog.showError(TicketSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(TicketSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 
@@ -109,7 +109,7 @@ public class TicketSelectionDialog extends OkCancelOptionDialog {
 			}
 
 		} catch (PosException e) {
-			POSMessageDialog.showError(TicketSelectionDialog.this, e.getLocalizedMessage(), e);
+			POSMessageDialog.showError(TicketSelectionDialog.this, e.getMessage(), e);
 		}
 	}
 
@@ -139,7 +139,8 @@ public class TicketSelectionDialog extends OkCancelOptionDialog {
 		TicketButton(Ticket ticket) {
 			this.ticket = ticket;
 			setFont(getFont().deriveFont(Font.BOLD, PosUIManager.getFontSize(18)));
-			setText("<html><body><center>#" + ticket.getId() + "<br>" + POSConstants.DUE + ":" + ticket.getDueAmount() + "</center></body></html>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			setText("<html><body><center>" + Messages.getString("TicketSelectionDialog.6") + ticket.getId() +
+				"<br>" + POSConstants.DUE + ":" + ticket.getDueAmount() + "</center></body></html>");
 			addActionListener(this);
 		}
 

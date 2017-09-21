@@ -20,8 +20,14 @@ package ru.instefa.cafepickpos.config.ui;
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.HeadlessException;
+import java.awt.IllegalComponentStateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -32,6 +38,7 @@ import javax.swing.JSeparator;
 import net.miginfocom.swing.MigLayout;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.exception.GenericJDBCException;
 
 import ru.instefa.cafepickpos.Database;
 import ru.instefa.cafepickpos.Messages;
@@ -67,7 +74,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 	private PosButton btnUpdateDb;
 	private PosButton btnExit;
 	private PosButton btnSave;
-	private JComboBox databaseCombo;
+	private JComboBox<Database> databaseCombo;
 
 	private TitlePanel titlePanel;
 	private JLabel lblServerAddress;
@@ -94,7 +101,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 		tfDatabaseName = new POSTextField();
 		tfUserName = new POSTextField();
 		tfPassword = new POSPasswordField();
-		databaseCombo = new JComboBox(Database.values());
+		databaseCombo = new JComboBox<>(Database.values());
 
 		String databaseProviderName = AppConfig.getDatabaseProviderName();
 		if (StringUtils.isNotEmpty(databaseProviderName)) {
@@ -153,9 +160,9 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 		btnExit.addActionListener(this);
 		btnUpdateDb.addActionListener(this);
 
-		databaseCombo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Database selectedDb = (Database) databaseCombo.getSelectedItem();
+		databaseCombo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+	    		Database selectedDb = (Database) databaseCombo.getSelectedItem();
 
 				if (selectedDb == Database.DERBY_SINGLE) {
 					setFieldsVisible(false);
@@ -170,7 +177,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 				}
 
 				tfServerPort.setText(databasePort);
-			}
+	      	}
 		});
 	}
 
@@ -202,127 +209,183 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 		try {
 			String command = e.getActionCommand();
 
-			Database selectedDb = (Database) databaseCombo.getSelectedItem();
-
-			final String providerName = selectedDb.getProviderName();
-			final String databaseURL = tfServerAddress.getText();
-			final String databasePort = tfServerPort.getText();
-			final String databaseName = tfDatabaseName.getText();
-			final String user = tfUserName.getText();
-			final String pass = new String(tfPassword.getPassword());
-
-			final String connectionString = selectedDb.getConnectString(databaseURL, databasePort, databaseName);
-			final String hibernateDialect = selectedDb.getHibernateDialect();
-			final String driverClass = selectedDb.getHibernateConnectionDriverClass();
-
 			if (CANCEL.equalsIgnoreCase(command)) {
-				dispose();
-				return;
-			}
-
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-			Application.getInstance().setSystemInitialized(false);
-			saveConfig(selectedDb, providerName, databaseURL, databasePort, databaseName, user, pass, connectionString, hibernateDialect);
-
-			if (TEST.equalsIgnoreCase(command)) {
-				try {
-					DatabaseUtil.checkConnection(connectionString, hibernateDialect, driverClass, user, pass);
-				} catch (DatabaseConnectionException e1) {
-					JOptionPane.showMessageDialog(this, Messages.getString("DatabaseConfigurationDialog.32")); //$NON-NLS-1$
+				if (!Application.getInstance().isSystemInitialized()) {
+					// proceed with the single viable option - close the application
+					Application.getInstance().exitSystem(0);
+				} else {
+					dispose();
 					return;
 				}
-
-				connectionSuccess = true;
-				JOptionPane.showMessageDialog(this, Messages.getString("DatabaseConfigurationDialog.31")); //$NON-NLS-1$
+			}
+			
+			if (TEST.equalsIgnoreCase(command)) {
+				if (checkConnection()) {
+					connectionSuccess = true;
+					JOptionPane.showMessageDialog(this, Messages.getString("DatabaseConfigurationDialog.31"));
+				} else {
+					JOptionPane.showMessageDialog(this, Messages.getString("DatabaseConfigurationDialog.32"));
+				}
 			}
 			else if (UPDATE_DATABASE.equals(command)) {
 				int i = JOptionPane.showConfirmDialog(this,
-						Messages.getString("DatabaseConfigurationDialog.0"), Messages.getString("DatabaseConfigurationDialog.1"), JOptionPane.YES_NO_OPTION); //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("DatabaseConfigurationDialog.0"),
+						Messages.getString("DatabaseConfigurationDialog.1"), JOptionPane.YES_NO_OPTION);
 				if (i != JOptionPane.YES_OPTION) {
 					return;
 				}
 
-				//isAuthorizedToPerformDbChange();
-
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-				boolean databaseUpdated = DatabaseUtil.updateDatabase(connectionString, hibernateDialect, driverClass, user, pass);
-				if (databaseUpdated) {
-					connectionSuccess = true;
-					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this, Messages.getString("DatabaseConfigurationDialog.2")); //$NON-NLS-1$
-				}
-				else {
-					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this, Messages.getString("DatabaseConfigurationDialog.3")); //$NON-NLS-1$
+				if (isAuthorizedToPerformDbChange()) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					
+					Application.getInstance().setSystemInitialized(false);
+	
+					if (updateDatabase()) {
+						connectionSuccess = true;
+						JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this,
+								Messages.getString("DatabaseConfigurationDialog.2"));
+					}
+					else {
+						JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this,
+								Messages.getString("DatabaseConfigurationDialog.3"));
+					}
 				}
 			}
 			else if (CREATE_DATABASE.equals(command)) {
 
-				int i = JOptionPane.showConfirmDialog(this,
-						Messages.getString("DatabaseConfigurationDialog.33"), Messages.getString("DatabaseConfigurationDialog.34"), JOptionPane.YES_NO_OPTION); //$NON-NLS-1$ //$NON-NLS-2$
+				int i = JOptionPane.showConfirmDialog(this, Messages.getString("DatabaseConfigurationDialog.33"),
+						Messages.getString("DatabaseConfigurationDialog.34"), JOptionPane.YES_NO_OPTION);
 				if (i != JOptionPane.YES_OPTION) {
 					return;
 				}
 
-				i = JOptionPane.showConfirmDialog(this,
-						Messages.getString("DatabaseConfigurationDialog.4"), Messages.getString("DatabaseConfigurationDialog.5"), JOptionPane.YES_NO_OPTION); //$NON-NLS-1$ //$NON-NLS-2$
+				i = JOptionPane.showConfirmDialog(this, Messages.getString("DatabaseConfigurationDialog.4"),
+						Messages.getString("DatabaseConfigurationDialog.5"), JOptionPane.YES_NO_OPTION);
 				boolean generateSampleData = false;
-				if (i == JOptionPane.YES_OPTION)
+				if (i == JOptionPane.YES_OPTION) {
 					generateSampleData = true;
+				}
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				
+				Application.getInstance().setSystemInitialized(false);
 
-				String createDbConnectString = selectedDb.getCreateDbConnectString(databaseURL, databasePort, databaseName);
+				if (createDatabase(generateSampleData)) {
+					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this,
+							Messages.getString("DatabaseConfigurationDialog.6") +
+							Messages.getString("DatabaseConfigurationDialog.7"));
 
-				boolean databaseCreated = DatabaseUtil.createDatabase(createDbConnectString, hibernateDialect, driverClass, user, pass, generateSampleData);
-
-				if (databaseCreated) {
-					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this, Messages.getString("DatabaseConfigurationDialog.6") + //$NON-NLS-1$
-							Messages.getString("DatabaseConfigurationDialog.7")); //$NON-NLS-1$
-
-					Main.restart();
+					try {
+						Main.restart();
+					} catch (IOException | InterruptedException | URISyntaxException ex) {
+						PosLog.error(getClass(), ex.getMessage());
+					}
+					
 					connectionSuccess = true;
 				}
 				else {
-					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this, Messages.getString("DatabaseConfigurationDialog.36")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(DatabaseConfigurationDialog.this,
+							Messages.getString("DatabaseConfigurationDialog.36"));
 				}
 			}
 			else if (SAVE.equalsIgnoreCase(command)) {
 				if (connectionSuccess) {
 					Application.getInstance().initializeSystem();
+				} else if (!Application.getInstance().isSystemInitialized()) {
+					// proceed with the single viable option - close the application
+					Application.getInstance().exitSystem(0);
 				}
+				Application.getInstance().setSystemInitialized(false);
 				dispose();
 			}
-		} catch (Exception e2) {
-			PosLog.error(getClass(), e2);
-			POSMessageDialog.showMessage(this, e2.getMessage());
+		} catch (IllegalComponentStateException ex) {
+			// TODO: refactor dialog to avoid the possibility of this error,
+			// databaseCombo's ActionListener has been replaced with an ItemListener
+			// as a workaround, further testing and monitoring are necessary.
+			POSMessageDialog.showMessage(this, Messages.getString("DatabaseConfigurationDialog.38"));
 		} finally {
 			setCursor(Cursor.getDefaultCursor());
 		}
 	}
 
-	private void isAuthorizedToPerformDbChange() {
-		DatabaseUtil.initialize();
+	private boolean isAuthorizedToPerformDbChange() {
+		try {
+			DatabaseUtil.initialize();
+			UserDAO.getInstance().findAll();
 
-		UserDAO.getInstance().findAll();
-
-		String password = JOptionPane.showInputDialog(Messages.getString("DatabaseConfigurationDialog.9")); //$NON-NLS-1$
-		User user2 = UserDAO.getInstance().findUserBySecretKey(password);
-		if (user2 == null || !user2.isAdministrator()) {
-			POSMessageDialog.showError(this, Messages.getString("DatabaseConfigurationDialog.11")); //$NON-NLS-1$
-			return;
+			String password = JOptionPane.showInputDialog(Messages.getString("DatabaseConfigurationDialog.9"));
+			User user2 = UserDAO.getInstance().findUserBySecretKey(password);
+			if (user2 == null || !user2.isAdministrator()) {
+				POSMessageDialog.showError(this, Messages.getString("DatabaseConfigurationDialog.11"));
+				return true;
+			}
+		} catch (DatabaseConnectionException | GenericJDBCException e) {
+			PosLog.error(getClass(), e.getMessage());
+			POSMessageDialog.showError(this, Messages.getString("DatabaseConfigurationDialog.39"));
 		}
+		return false;
 	}
+	
+	private HashMap<String, String> getDbParameters(boolean create) {
+        HashMap<String, String> data = new HashMap<String, String>();
+        
+        final Database selectedDb = (Database) databaseCombo.getSelectedItem();
+		final String providerName = selectedDb.getProviderName();
+		final String databaseURL = tfServerAddress.getText();
+		final String databasePort = tfServerPort.getText();
+		final String databaseName = tfDatabaseName.getText();
+		
+		data.put("user", tfUserName.getText());
+		data.put("pass", new String(tfPassword.getPassword()));
+		data.put("dialect", selectedDb.getHibernateDialect());
+		data.put("driver", selectedDb.getHibernateConnectionDriverClass());
+		if (create) {
+			data.put("conn", selectedDb.getCreateDbConnectString(databaseURL, databasePort, databaseName));
+		} else {
+			data.put("conn", selectedDb.getConnectString(databaseURL, databasePort, databaseName));
+		}
 
-	private void saveConfig(Database selectedDb, String providerName, String databaseURL, String databasePort, String databaseName, String user, String pass,
-			String connectionString, String hibernateDialect) {
 		AppConfig.setDatabaseProviderName(providerName);
-		AppConfig.setConnectString(connectionString);
+		AppConfig.setConnectString(data.get("conn"));
 		AppConfig.setDatabaseHost(databaseURL);
 		AppConfig.setDatabasePort(databasePort);
 		AppConfig.setDatabaseName(databaseName);
-		AppConfig.setDatabaseUser(user);
-		AppConfig.setDatabasePassword(pass);
+		AppConfig.setDatabaseUser(data.get("user"));
+		AppConfig.setDatabasePassword(data.get("pass"));
+        
+        return data;
+	}
+
+	private boolean checkConnection() {
+		HashMap<String, String> db = getDbParameters(false);
+		
+		try {
+			DatabaseUtil.checkConnection(db.get("conn"), db.get("dialect"),
+					db.get("driver"), db.get("user"), db.get("pass"));
+		} catch (DatabaseConnectionException e1) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean updateDatabase() {
+		HashMap<String, String> db = getDbParameters(false);
+		
+		if (DatabaseUtil.updateDatabase(db.get("conn"), db.get("dialect"),
+				db.get("driver"), db.get("user"), db.get("pass"))) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean createDatabase(boolean generateSampleData) {
+		HashMap<String, String> db = getDbParameters(true);
+
+		if (DatabaseUtil.createDatabase(db.get("conn"), db.get("dialect"),
+				db.get("driver"), db.get("user"), db.get("pass"), generateSampleData)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setTitle(String title) {
@@ -350,7 +413,7 @@ public class DatabaseConfigurationDialog extends POSDialog implements ActionList
 
 	public static DatabaseConfigurationDialog show(Frame parent) {
 		DatabaseConfigurationDialog dialog = new DatabaseConfigurationDialog();
-		dialog.setTitle(Messages.getString("DatabaseConfigurationDialog.38")); //$NON-NLS-1$
+		dialog.setTitle(Messages.getString("DatabaseConfigurationDialog.37")); //$NON-NLS-1$
 		dialog.pack();
 		dialog.open();
 

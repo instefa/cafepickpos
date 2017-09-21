@@ -67,7 +67,7 @@ import ru.instefa.cafepickpos.util.NumberUtil;
 import ru.instefa.cafepickpos.util.POSUtil;
 import ru.instefa.cafepickpos.exceptions.TicketAlreadyExistsException;
 
-public class SplitedTicketSelectionDialog extends POSDialog {
+public class SplittedTicketSelectionDialog extends POSDialog {
 	private List<Ticket> splitTickets;
 	private JPanel splitTicketsPanel;
 	private PosButton btnPay;
@@ -81,7 +81,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 	private OrderType orderType;
 	private boolean createNewTicket;
 
-	public SplitedTicketSelectionDialog(List<Ticket> tickets) {
+	public SplittedTicketSelectionDialog(List<Ticket> tickets) {
 		super(Application.getPosWindow(), POSConstants.TICKETS.toUpperCase());
 		this.splitTickets = tickets;
 		setLayout(new BorderLayout());
@@ -115,7 +115,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 		TransparentPanel buttonPanel = new ru.instefa.cafepickpos.swing.TransparentPanel();
 		buttonPanel.setLayout(new MigLayout("fill,hidemode 3, ins 0 17 10 17", "fill", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-		btnPayAll = new PosButton(Messages.getString("SplitedTicketSelectionDialog.7")); //$NON-NLS-1$
+		btnPayAll = new PosButton(Messages.getString("SplittedTicketSelectionDialog.7")); //$NON-NLS-1$
 		btnPayAll.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (!POSUtil.checkDrawerAssignment()) {
@@ -136,7 +136,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			}
 		});
 
-		btnPay = new PosButton(Messages.getString("SplitedTicketSelectionDialog.8")); //$NON-NLS-1$
+		btnPay = new PosButton(Messages.getString("SplittedTicketSelectionDialog.8")); //$NON-NLS-1$
 		btnPay.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (!POSUtil.checkDrawerAssignment()) {
@@ -144,14 +144,15 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 				}
 				TicketSection selectedSection = getSelectedSection();
 				if (selectedSection == null) {
-					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(), "Please select ticket.");
+					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(),
+						Messages.getString("SplittedTicketSelectionDialog.25"));
 					return;
 				}
 				Ticket splitTicket = selectedSection.getTicket();
 				if (splitTicket == null)
 					return;
 				if (splitTicket.isPaid()) {
-					POSMessageDialog.showMessage(Messages.getString("SplitedTicketSelectionDialog.9")); //$NON-NLS-1$
+					POSMessageDialog.showMessage(Messages.getString("SplittedTicketSelectionDialog.9")); //$NON-NLS-1$
 					return;
 				}
 				SettleTicketAction action = new SettleTicketAction(splitTicket.getId());
@@ -168,7 +169,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			}
 		});
 
-		btnPrintAll = new PosButton(Messages.getString("SplitedTicketSelectionDialog.17"));
+		btnPrintAll = new PosButton(Messages.getString("SplittedTicketSelectionDialog.17"));
 		btnPrintAll.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				for (Ticket splitTicket : splitTickets) {
@@ -177,12 +178,13 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			}
 		});
 
-		btnPrint = new PosButton(Messages.getString("SplitedTicketSelectionDialog.20"));
+		btnPrint = new PosButton(Messages.getString("SplittedTicketSelectionDialog.20"));
 		btnPrint.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				TicketSection selectedSection = getSelectedSection();
 				if (selectedSection == null) {
-					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(), "Please select ticket.");
+					POSMessageDialog.showMessage(POSUtil.getFocusedWindow(),
+						Messages.getString("SplittedTicketSelectionDialog.25"));
 					return;
 				}
 				Ticket splitTicket = selectedSection.getTicket();
@@ -192,7 +194,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			}
 		});
 
-		btnOrderInfo = new PosButton(Messages.getString("SplitedTicketSelectionDialog.24")); //$NON-NLS-1$
+		btnOrderInfo = new PosButton(Messages.getString("SplittedTicketSelectionDialog.24")); //$NON-NLS-1$
 		btnOrderInfo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				showOrderInfo();
@@ -342,7 +344,7 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 			String currencySymbol = CurrencyUtil.getCurrencySymbol();
 			String title = "";
 			if (splitTicket == null) {
-				title = "[New Ticket]";
+				title = Messages.getString("SplittedTicketSelectionDialog.26");
 				lblPaidStatus.setText("+");
 				lblPaidStatus.setFont(new Font(lblPaidStatus.getFont().getName(), Font.BOLD, 48));
 				separator.setVisible(false);
@@ -353,19 +355,19 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 				Integer tokenNo = splitTicket.getId();
 
 				if (tokenNo > 0) {
-					title = "Ticket# " + tokenNo;
+					title = Messages.getString("KitchenTicketView.19") + " " + tokenNo;
 				}
 				else
-					title = "[New Check]";
+					title = Messages.getString("SplittedTicketSelectionDialog.27");
 
 				lblTitle.setText("<html><center><small>" + String.valueOf(title) + "</small><br>" + splitTicket.getOwner().getFirstName() + "</center></html>");
 				lblTotalAmount.setText(currencySymbol + NumberUtil.formatNumber(splitTicket.getTotalAmount()));
 				String dueStatusText = ""; //$NON-NLS-1$
 				if (splitTicket.isRefunded()) {
-					dueStatusText = "REFUNDED"; //$NON-NLS-1$
+					dueStatusText = Messages.getString("SplittedTicketSelectionDialog.28"); //$NON-NLS-1$
 				}
 				else if (splitTicket.getDueAmount() <= 0) {
-					dueStatusText = "PAID"; //$NON-NLS-1$
+					dueStatusText = Messages.getString("SplittedTicketSelectionDialog.29"); //$NON-NLS-1$
 				}
 				else {
 					dueStatusText = currencySymbol + NumberUtil.formatNumber(splitTicket.getDueAmount());
@@ -402,11 +404,11 @@ public class SplitedTicketSelectionDialog extends POSDialog {
 					if (splitTicket.getOrderType().isShouldPrintToKitchen()) {
 						if (splitTicket.needsKitchenPrint()) {
 							ReceiptPrintService.printToKitchen(splitTicket);
-							POSMessageDialog.showMessage("Ticket successfully sent to kitchen");
+							POSMessageDialog.showMessage(Messages.getString("SplittedTicketSelectionDialog.30"));
 							TicketDAO.getInstance().refresh(splitTicket);
 						}
 						else {
-							POSMessageDialog.showMessage("Ticket has already sent to kitchen");
+							POSMessageDialog.showMessage(Messages.getString("SplittedTicketSelectionDialog.31"));
 						}
 					}
 				}

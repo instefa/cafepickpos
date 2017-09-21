@@ -74,7 +74,7 @@ public class TicketViewerTable extends JTable {
 	private void resizeTableColumns() {
 		setAutoResizeMode(AUTO_RESIZE_ALL_COLUMNS);
 		//setColumnWidth(1, PosUIManager.getSize(50));
-		setColumnWidth(0, PosUIManager.getSize(50));
+		setColumnWidth(0, PosUIManager.getSize(40));
 		setColumnWidth(2, PosUIManager.getSize(60));
 	}
 

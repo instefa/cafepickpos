@@ -109,7 +109,7 @@ public class UserForm extends BeanEditor {
 		tfPhone.setColumns(20);
 		add(tfPhone, "cell 1 1,growx"); //$NON-NLS-1$
 
-		jLabel2.setText("SSN"); //$NON-NLS-1$
+		jLabel2.setText(Messages.getString("CustomerForm.22")); //$NON-NLS-1$
 		add(jLabel2, "cell 0 2,alignx trailing,aligny center"); //$NON-NLS-1$
 
 		jLabel3.setText(Messages.getString("UserForm.14")); //$NON-NLS-1$

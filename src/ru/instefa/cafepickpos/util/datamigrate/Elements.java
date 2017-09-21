@@ -27,6 +27,7 @@ import ru.instefa.cafepickpos.model.MenuItem;
 import ru.instefa.cafepickpos.model.MenuItemModifierGroup;
 import ru.instefa.cafepickpos.model.MenuModifier;
 import ru.instefa.cafepickpos.model.MenuModifierGroup;
+import ru.instefa.cafepickpos.model.ModifierMultiplierPrice;
 import ru.instefa.cafepickpos.model.Tax;
 
 @XmlRootElement(name = "elements")
@@ -88,9 +89,17 @@ public class Elements {
 			return;
 
 		for (MenuModifier menuModifier : menuModifiers) {
+			// preventing group loop
 			MenuModifierGroup modifierGroup = menuModifier.getModifierGroup();
-			if(modifierGroup != null) {
+			if (modifierGroup != null) {
 				modifierGroup.setModifiers(null);
+			}
+			// preventing multiplier price loop
+			List<ModifierMultiplierPrice> multiplierPrices = menuModifier.getMultiplierPriceList();
+			if (multiplierPrices != null) {
+				for (ModifierMultiplierPrice price : multiplierPrices) {
+					price.setModifier(null);
+				}
 			}
 		}
 	}

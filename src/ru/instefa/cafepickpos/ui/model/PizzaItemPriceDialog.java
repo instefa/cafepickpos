@@ -138,15 +138,15 @@ public class PizzaItemPriceDialog extends POSDialog {
 		}
 
 		if (cbSize.getSelectedItem() == null) {
-			POSMessageDialog.showError(this, "Please Select Size!");
+			POSMessageDialog.showError(this, Messages.getString("PizzaItemPriceDialog.0"));
 			return false;
 		}
 		if (cbCrust.getSelectedItem() == null) {
-			POSMessageDialog.showError(this, "Please Select Crust!");
+			POSMessageDialog.showError(this, Messages.getString("PizzaItemPriceDialog.1"));
 			return false;
 		}
 		if (tfPrice.getText() == null) {
-			POSMessageDialog.showError(this, "Price Cannot Be Empty!");
+			POSMessageDialog.showError(this, Messages.getString("PizzaItemPriceDialog.2"));
 			return false;
 		}
 
@@ -162,7 +162,7 @@ public class PizzaItemPriceDialog extends POSDialog {
 			for (PizzaPrice pc : pizzaPriceList) {
 				if (pc.getSize().equals(cbSize.getSelectedItem()) && pc.getCrust().equals(cbCrust.getSelectedItem())) {
 					if (pc != this.pizzaPrice) {
-						POSMessageDialog.showMessage(this, "Duplicate item cannot be entered");
+						POSMessageDialog.showMessage(this, Messages.getString("PizzaItemPriceDialog.3"));
 						return false;
 					}
 				}
@@ -185,11 +185,11 @@ public class PizzaItemPriceDialog extends POSDialog {
 		orderTypeList.add(0, null);
 
 		final JLabel sizeLabel = new JLabel();
-		sizeLabel.setText("Size");
+		sizeLabel.setText(Messages.getString("PizzaItemPriceDialog.4"));
 		cbSize = new JComboBox(new ListComboBoxModel<MenuItemSize>(menuItemSizeList));
 
 		final JLabel crustLabel = new JLabel();
-		crustLabel.setText("Crust");
+		crustLabel.setText(Messages.getString("PizzaItemPriceDialog.5"));
 		cbCrust = new JComboBox(new ListComboBoxModel<PizzaCrust>(crustList));
 		// new DefaultComboBoxModel(TaxDAO.getInstance().findAll().toArray())
 
