@@ -47,6 +47,7 @@ import ru.instefa.cafepickpos.model.dao.MenuModifierDAO;
 import ru.instefa.cafepickpos.model.dao.MenuModifierGroupDAO;
 import ru.instefa.cafepickpos.model.dao.TaxDAO;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
+import ru.instefa.cafepickpos.util.POSUtil;
 import ru.instefa.cafepickpos.util.datamigrate.Elements;
 
 public class DataExportAction extends AbstractAction {
@@ -145,12 +146,12 @@ public class DataExportAction extends AbstractAction {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setSelectedFile(new File("cafepickpos-menu-items.xml")); //$NON-NLS-1$
+		fileChooser.setSelectedFile(new File(POSUtil.getMenuFilename())); //$NON-NLS-1$
 		fileChooser.setFileFilter(new FileFilter() {
 
 			@Override
 			public String getDescription() {
-				return "XML File"; //$NON-NLS-1$
+				return Messages.getString("DataExportAction.5"); //$NON-NLS-1$
 			}
 
 			@Override

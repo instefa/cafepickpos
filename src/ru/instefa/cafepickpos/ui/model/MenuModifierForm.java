@@ -680,13 +680,13 @@ public class MenuModifierForm extends BeanEditor {
 			//chkEnable = new JCheckBox(multiplier.getName());
 			tfAditionalPrice = new DoubleTextField(multiplier.isMain() ? 6 : 9);
 			tfAditionalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
-			JLabel lblName = new JLabel(multiplier.getName());
+			JLabel lblName = new JLabel(multiplier.getTicketPrefix());
 			if (multiplier.isMain()) {
 				lblName.setFont(new Font(null, Font.BOLD, tfName.getFont().getSize()));
 			}
 			add(lblName);
-			add(new JLabel(multiplier.isMain() ? POSConstants.PRICE : Messages.getString("MenuModifierForm.48"),
-					JLabel.TRAILING), "grow, gapright 10px");
+			String text = multiplier.isMain() ? Messages.getString("MenuModifierForm.51") : Messages.getString("MenuModifierForm.48");
+			add(new JLabel(text, JLabel.TRAILING), "grow, gapright 10px");
 			add(tfAditionalPrice, "split 2,grow");
 			if (multiplier.isMain()) {
 				JButton btnCalculateMultilierPrice = new JButton(Messages.getString("MenuModifierForm.49"));

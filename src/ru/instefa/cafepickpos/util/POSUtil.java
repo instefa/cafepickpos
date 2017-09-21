@@ -19,6 +19,7 @@
 package ru.instefa.cafepickpos.util;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Window;
@@ -282,4 +283,17 @@ public class POSUtil {
     	}
 		return null;
 	}
+    
+    public static String getMenuFilename() {
+    	/**
+    	 * Return menu items file name based on the current locale.
+    	 */
+    	String localeCode = Locale.getDefault().getLanguage();
+    	String fileName = "cafepickpos-menu-items";
+    	
+    	if (!localeCode.equals(new Locale("en").getLanguage())) {
+    		fileName = fileName + "_" + localeCode;
+    	}
+    	return "/" + fileName + ".xml";
+    }
 }
