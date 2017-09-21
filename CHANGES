@@ -1,9 +1,10 @@
 ================================= Version 2017.0.1 =================================
 
-1. Extended translation into Russian.
-2. cafepick.ru booking service integration.
+- extended translation into Russian
+- cafepick.ru booking service integration
 
 ================================= Version 2017.0.2 =================================
 
-1. 'МИР' card general support.
-2. 'Online' cash-register general support.
+- sample data localization
+- 24 hour clock format by default
+- various bugfixes
