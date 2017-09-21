@@ -408,7 +408,7 @@ public class DatabaseUtil {
 				return true;
 			}
 
-			DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream("/cafepickpos-menu-items.xml"));
+			DataImportAction.importMenuItems(DatabaseUtil.class.getResourceAsStream(POSUtil.getMenuFilename()));
 
 			return true;
 		} catch (Exception e) {
