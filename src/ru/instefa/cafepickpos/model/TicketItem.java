@@ -77,27 +77,23 @@ public class TicketItem extends BaseTicketItem implements ITicketItem {
 	}
 
 	/*[CONSTRUCTOR MARKER BEGIN]*/
-	public TicketItem () {
+	public TicketItem() {
 		super();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public TicketItem (java.lang.Integer id) {
+	public TicketItem(java.lang.Integer id) {
 		super(id);
 	}
 
 	/**
 	 * Constructor for required fields
 	 */
-	public TicketItem (
-		java.lang.Integer id,
-		ru.instefa.cafepickpos.model.Ticket ticket) {
+	public TicketItem(java.lang.Integer id, ru.instefa.cafepickpos.model.Ticket ticket) {
 
-		super (
-			id,
-			ticket);
+		super(id, ticket);
 	}
 
 	/*[CONSTRUCTOR MARKER END]*/
@@ -515,6 +511,10 @@ public class TicketItem extends BaseTicketItem implements ITicketItem {
 				return false;
 			}
 
+			if (next1.getMultiplierName() != null && next2.getMultiplierName() != null && !next1.getMultiplierName().equals(next2.getMultiplierName())) {
+				return false;
+			}
+
 			if (merge) {
 				next1.merge(next2);
 			}
@@ -884,8 +884,8 @@ public class TicketItem extends BaseTicketItem implements ITicketItem {
 			Integer itemId = ticketItemModifier.getModifierId();
 			if (multiplier != null) {
 				if ((itemId != null && itemId.intValue() == menuModifier.getId().intValue())
-						&& (sectionName != null && sectionName.equals(ticketItemModifier.getSectionName()) && (multiplier != null && multiplier.getName()
-								.equals(ticketItemModifier.getMultiplierName())))) {
+						&& (sectionName != null && sectionName.equals(ticketItemModifier.getSectionName())
+								&& (multiplier != null && multiplier.getName().equals(ticketItemModifier.getMultiplierName())))) {
 					return ticketItemModifier;
 				}
 			}
@@ -953,11 +953,11 @@ public class TicketItem extends BaseTicketItem implements ITicketItem {
 		return false;
 	}
 	
-	public java.util.List<ru.instefa.cafepickpos.model.TicketItemDiscount> getDiscounts () {
-		if(super.getDiscounts()==null) {
+	public java.util.List<ru.instefa.cafepickpos.model.TicketItemDiscount> getDiscounts() {
+		if (super.getDiscounts() == null) {
 			super.setDiscounts(new ArrayList<TicketItemDiscount>());
 		}
 		return super.getDiscounts();
-}
+	}
 
 }

@@ -366,7 +366,7 @@ public class KitchenTicket extends BaseKitchenTicket {
 					item.setSortOrder(ticketItem.getMenuItem().getParent().getSortOrder());
 				}
 				//item.setFractionalQuantity(itemModifier.getItemCount().doubleValue());
-				item.setQuantity(itemModifier.getItemCount());
+				//item.setQuantity(itemModifier.getItemCount());
 				item.setStatus(KitchenTicketStatus.WAITING.name());
 				kitchenTicket.addToticketItems(item);
 
