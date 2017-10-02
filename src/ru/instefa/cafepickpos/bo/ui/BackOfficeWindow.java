@@ -210,7 +210,6 @@ public class BackOfficeWindow extends javax.swing.JFrame {
 		reportMenu.add(new SalesExceptionReportAction());
 		reportMenu.add(new SalesDetailReportAction());
 		//reportMenu.add(new PurchaseReportAction());
-		//reportMenu.add(new InventoryOnHandReportAction());
 		menuBar.add(reportMenu);
 	}
 

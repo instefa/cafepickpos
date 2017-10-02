@@ -17,14 +17,46 @@
  */
 package ru.instefa.cafepickpos.model.dao;
 
+import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import ru.instefa.cafepickpos.model.InventoryGroup;
+import ru.instefa.cafepickpos.model.InventoryTransaction;
+import ru.instefa.cafepickpos.model.InventoryTransactionType;
 
 public class InventoryTransactionDAO extends BaseInventoryTransactionDAO {
 
 	/**
 	 * Default constructor.  Can be used in place of getInstance()
 	 */
-	public InventoryTransactionDAO () {}
+	public InventoryTransactionDAO() {
+	}
 
+	public List<InventoryTransaction> findTransactions(InventoryTransactionType transactionType, InventoryGroup group, Date fromDate, Date toDate) {
+		Session session = null;
+		try {
+			session = createNewSession();
+			Criteria criteria = session.createCriteria(getReferenceClass());
+			if (transactionType != null) {
+				criteria.add(Restrictions.eq(InventoryTransaction.PROP_TYPE, transactionType));
+			}
+			criteria.add(Restrictions.between(InventoryTransaction.PROP_TRANSACTION_DATE, fromDate, toDate));
+			if (group != null) {
+				criteria.createAlias(InventoryTransaction.PROP_INVENTORY_ITEM, "item");
+				criteria.add(Restrictions.eq("item.itemGroup", group));
+			}
+
+			criteria.addOrder(Order.asc(InventoryTransaction.PROP_INVENTORY_ITEM));
+			criteria.addOrder(Order.asc(InventoryTransaction.PROP_TRANSACTION_DATE));
+			return criteria.list();
+		} finally {
+			closeSession(session);
+		}
+	}
 
 }

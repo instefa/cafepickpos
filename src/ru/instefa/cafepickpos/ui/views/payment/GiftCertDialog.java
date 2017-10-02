@@ -22,8 +22,6 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.apache.commons.lang.StringUtils;
 
 import ru.instefa.cafepickpos.Messages;
@@ -32,6 +30,9 @@ import ru.instefa.cafepickpos.swing.FixedLengthTextField;
 import ru.instefa.cafepickpos.swing.QwertyKeyPad;
 import ru.instefa.cafepickpos.ui.dialog.OkCancelOptionDialog;
 import ru.instefa.cafepickpos.ui.dialog.POSMessageDialog;
+import ru.instefa.cafepickpos.util.POSUtil;
+
+import net.miginfocom.swing.MigLayout;
 
 public class GiftCertDialog extends OkCancelOptionDialog {
 	private FixedLengthTextField tfGiftCertNumber;
@@ -39,7 +40,7 @@ public class GiftCertDialog extends OkCancelOptionDialog {
 	private QwertyKeyPad qwertyKeyPad;
 
 	public GiftCertDialog() {
-		super();
+		super(POSUtil.getFocusedWindow());
 
 		setTitle(Messages.getString("GiftCertDialog.0")); //$NON-NLS-1$
 		setTitlePaneText(Messages.getString("GiftCertDialog.1"));
