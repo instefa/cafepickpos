@@ -18,7 +18,6 @@
  */
 package ru.instefa.cafepickpos.report;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -665,8 +664,6 @@ public class ReceiptPrintService {
 	}
 
 	private static StringBuilder buildMultiCurrencyTotalAmount(Ticket ticket, TicketPrintProperties printProperties) {
-		DecimalFormat decimalFormat = new DecimalFormat("0.00"); //$NON-NLS-1$
-
 		StringBuilder currencyAmountBuilder = new StringBuilder();
 		currencyAmountBuilder.append("<html><table>"); //$NON-NLS-1$
 
@@ -706,9 +703,9 @@ public class ReceiptPrintService {
 			double rate = currency.getExchangeRate();
 			beginRow(currencyAmountBuilder);
 			addColumn(currencyAmountBuilder, getHtmlText(key, 10, LEFT));
-			addColumn(currencyAmountBuilder, getHtmlText(decimalFormat.format(ticket.getTotalAmount() * rate), 12, RIGHT));
+			addColumn(currencyAmountBuilder, getHtmlText(NumberUtil.formatNumber(ticket.getTotalAmount() * rate), 12, RIGHT));
 			//addColumn(currencyAmountBuilder, getHtmlText(decimalFormat.format(ticket.getPaidAmount() * rate), 10, RIGHT));
-			addColumn(currencyAmountBuilder, getHtmlText(decimalFormat.format(ticket.getDueAmount() * rate), 12, RIGHT));
+			addColumn(currencyAmountBuilder, getHtmlText(NumberUtil.formatNumber(ticket.getDueAmount() * rate), 12, RIGHT));
 			endRow(currencyAmountBuilder);
 			rowCount++;
 		}
@@ -721,9 +718,6 @@ public class ReceiptPrintService {
 	}
 
 	private static StringBuilder buildMultiCurrency(Ticket ticket, TicketPrintProperties printProperties) {
-
-		DecimalFormat decimalFormat = new DecimalFormat("0.000"); //$NON-NLS-1$
-
 		StringBuilder currencyAmountBuilder = new StringBuilder();
 		currencyAmountBuilder.append("<html><table>"); //$NON-NLS-1$
 
@@ -781,10 +775,11 @@ public class ReceiptPrintService {
 				if (paid == 0 && changeDue == 0) {
 					continue;
 				}
+				
 				beginRow(currencyAmountBuilder);
 				addColumn(currencyAmountBuilder, getHtmlText(key, 10, LEFT));
-				addColumn(currencyAmountBuilder, getHtmlText(decimalFormat.format(paid), 12, RIGHT));
-				addColumn(currencyAmountBuilder, getHtmlText(decimalFormat.format(changeDue), 12, RIGHT));
+				addColumn(currencyAmountBuilder, getHtmlText(NumberUtil.formatNumber(paid.doubleValue()), 12, RIGHT));
+				addColumn(currencyAmountBuilder, getHtmlText(NumberUtil.formatNumber(changeDue.doubleValue()), 12, RIGHT));
 				endRow(currencyAmountBuilder);
 				rowCount++;
 			}

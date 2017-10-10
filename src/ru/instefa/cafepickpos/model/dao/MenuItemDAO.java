@@ -29,9 +29,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 
 import ru.instefa.cafepickpos.Messages;
 import ru.instefa.cafepickpos.PosLog;
@@ -128,8 +131,19 @@ public class MenuItemDAO extends BaseMenuItemDAO {
 
 			if (selectedOrderType instanceof OrderType) {
 				OrderType orderType = (OrderType) selectedOrderType;
-				criteria.createAlias("orderTypeList", "type", CriteriaSpecification.LEFT_JOIN);
-				criteria.add(Restrictions.or(Restrictions.isEmpty("orderTypeList"), Restrictions.eq("type.id", orderType.getId())));
+				// Derby DBE doesn't support FULL_JOIN, UNION should be used instead
+				criteria.createAlias("orderTypeList", "otype", CriteriaSpecification.FULL_JOIN);
+
+				DetachedCriteria subquery1 = DetachedCriteria.forClass(OrderType.class, "c1");
+				subquery1.add(Restrictions.eqProperty("otype.id", "c1.id"));
+				subquery1.setProjection(Projections.property("c1.id"));
+
+				DetachedCriteria subquery2 = DetachedCriteria.forClass(OrderType.class, "c2");
+				subquery2.add(Restrictions.eqProperty("otype.id", "c2.id"));
+				subquery2.setProjection(Projections.property("c2.id"));
+				subquery2.add(Restrictions.eq("c2.id", orderType.getId()));
+
+				criteria.add(Restrictions.or(Subqueries.notExists(subquery1), Subqueries.in(orderType.getId(), subquery2)));
 			}
 			return criteria.list();
 
