@@ -99,8 +99,7 @@ public class MenuGroupDAO extends BaseMenuGroupDAO {
 			//				criteria.add(Restrictions.eq(MenuItem., criteria))
 			//			}
 			criteria.setProjection(Projections.rowCount());
-			// Derby DBE doesn't support FULL_JOIN, UNION should be used instead
-			criteria.createAlias("orderTypeList", "otype", CriteriaSpecification.FULL_JOIN);
+			criteria.createAlias("orderTypeList", "otype", CriteriaSpecification.LEFT_JOIN);
 
 			DetachedCriteria subquery1 = DetachedCriteria.forClass(OrderType.class, "c1");
 			subquery1.add(Restrictions.eqProperty("otype.id", "c1.id"));

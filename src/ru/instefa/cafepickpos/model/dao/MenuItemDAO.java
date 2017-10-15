@@ -131,8 +131,7 @@ public class MenuItemDAO extends BaseMenuItemDAO {
 
 			if (selectedOrderType instanceof OrderType) {
 				OrderType orderType = (OrderType) selectedOrderType;
-				// Derby DBE doesn't support FULL_JOIN, UNION should be used instead
-				criteria.createAlias("orderTypeList", "otype", CriteriaSpecification.FULL_JOIN);
+				criteria.createAlias("orderTypeList", "otype", CriteriaSpecification.LEFT_JOIN);
 
 				DetachedCriteria subquery1 = DetachedCriteria.forClass(OrderType.class, "c1");
 				subquery1.add(Restrictions.eqProperty("otype.id", "c1.id"));
